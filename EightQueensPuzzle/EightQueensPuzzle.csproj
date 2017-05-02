@@ -35,8 +35,39 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceManager, Version=2011.4.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityCommonServiceManager.1.0.1\lib\CommonServiceManager.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm, Version=1.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop, Version=1.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces, Version=1.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityCommonServiceManager.1.0.1\lib\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Globalization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -46,15 +77,61 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="Unity.ServiceLocator, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.ServiceLocator.2.0.0\lib\net45\Unity.ServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnityCommonServiceManagerAdapter, Version=2010.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnityCommonServiceManager.1.0.1\lib\UnityCommonServiceManagerAdapter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChessboardField.cs" />
+    <Compile Include="Enums\Pawn.cs" />
+    <Compile Include="FieldColorHelper.cs" />
+    <Compile Include="ImageHelper.cs" />
+    <Compile Include="Models\Chessboard.cs" />
+    <Compile Include="Models\GameSettings.cs" />
+    <Compile Include="Models\IChessboard.cs" />
+    <Compile Include="Services\CheesboardValidator.cs" />
+    <Compile Include="Services\CheesboardValidatorManager.cs" />
+    <Compile Include="Services\IChessboardValidatorManager.cs" />
+    <Compile Include="Services\IChessboardValidatorStrategy.cs" />
+    <Compile Include="Services\ITipService.cs" />
+    <Compile Include="Services\ValidationStrategy\BishopValidatorStrategy.cs" />
+    <Compile Include="Services\ValidationStrategy\ChessPawnValidatorStrategyBase.cs" />
+    <Compile Include="Services\ValidationStrategy\KingValidatorStrategy.cs" />
+    <Compile Include="Services\ValidationStrategy\KnightValidatorStrategy.cs" />
+    <Compile Include="Services\ValidationStrategy\PawnValidatorStrategy.cs" />
+    <Compile Include="Services\ValidationStrategy\QueenValidatorStrategy.cs" />
+    <Compile Include="Services\ValidationStrategy\RookValidatorStrategy.cs" />
+    <Compile Include="TipService.cs" />
+    <Compile Include="ViewModels\BoardViewModel.cs" />
+    <Compile Include="ViewModels\GameViewModel.cs" />
+    <Compile Include="ViewModels\IMenuPageViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="Views\BoardPage.xaml.cs">
+      <DependentUpon>BoardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BoardUserControl.xaml.cs">
+      <DependentUpon>BoardUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NavigationTabUserControl.xaml.cs">
+      <DependentUpon>NavigationTabUserControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,10 +140,27 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\BoardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BoardUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NavigationTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -85,7 +179,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,6 +190,31 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\QueenPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Queen-512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaseReuseServices\BaseReuseServices.csproj">
+      <Project>{B0D219CF-6471-49BA-9A91-723189BDFC8A}</Project>
+      <Name>BaseReuseServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WpfUtilities\WpfUtilities.csproj">
+      <Project>{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F}</Project>
+      <Name>WpfUtilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\White_Queen_Finish.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

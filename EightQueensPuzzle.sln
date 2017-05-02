@@ -5,6 +5,12 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EightQueensPuzzle", "EightQueensPuzzle\EightQueensPuzzle.csproj", "{6902221C-7FD4-4CD6-9AF0-A79F5EC13DC9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{73011416-AF99-43B7-A1BB-488E66187937}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfUtilities", "WpfUtilities\WpfUtilities.csproj", "{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseReuseServices", "BaseReuseServices\BaseReuseServices.csproj", "{B0D219CF-6471-49BA-9A91-723189BDFC8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +21,20 @@ Global
 		{6902221C-7FD4-4CD6-9AF0-A79F5EC13DC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6902221C-7FD4-4CD6-9AF0-A79F5EC13DC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6902221C-7FD4-4CD6-9AF0-A79F5EC13DC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D219CF-6471-49BA-9A91-723189BDFC8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D219CF-6471-49BA-9A91-723189BDFC8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D219CF-6471-49BA-9A91-723189BDFC8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D219CF-6471-49BA-9A91-723189BDFC8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F} = {73011416-AF99-43B7-A1BB-488E66187937}
+		{B0D219CF-6471-49BA-9A91-723189BDFC8A} = {73011416-AF99-43B7-A1BB-488E66187937}
 	EndGlobalSection
 EndGlobal
