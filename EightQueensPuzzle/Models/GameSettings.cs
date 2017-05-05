@@ -4,6 +4,6 @@ namespace EightQueensPuzzle.Models
 {
     public static class GameSettings
     {
-        public static Pawn SelectedPawn { get; set; }
+        public static Pawn SelectedPawn { get; set; } = Pawn.Queen; //todo
     }
 }

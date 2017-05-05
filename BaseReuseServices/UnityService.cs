@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Practices.Unity;
 
 namespace BaseReuseServices
 {
-    public sealed class UnityService
+    public sealed class UnityService : IDisposable
     {
         private static UnityService _instance;
         private readonly IUnityContainer _unityContainer;
@@ -57,6 +58,11 @@ namespace BaseReuseServices
         public IEnumerable<T> ResolveAll<T>(params ResolverOverride[] overrides)
         {
             return _unityContainer.ResolveAll<T>(overrides);
+        }
+
+        public void Dispose()
+        {
+            //todo
         }
     }
 }

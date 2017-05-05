@@ -2,7 +2,7 @@
 
 namespace EightQueensPuzzle.Models
 {
-    interface IChessboard
+    public interface IChessboard
     {
         ObservableCollection<ChessboardField> ChessboardFields { get; }
 

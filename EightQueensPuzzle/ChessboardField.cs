@@ -1,26 +1,25 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+using BaseReuseServices;
 using EightQueensPuzzle.Services;
+using Microsoft.Practices.Unity;
 using WpfUtilities;
 
 namespace EightQueensPuzzle
 {
     public class ChessboardField : INotifyPropertyChanged
     {
-        private readonly int _row;
-        private readonly int _column;
         private readonly ITipService _tipService;
         private readonly object _thisLock;
         private static readonly SolidColorBrush DefaultFieldColor = new SolidColorBrush(Color.FromRgb(100, 181, 246));
         private Brush _currentFieldColor;
 
-        public ChessboardField(int row, int column, ITipService tipService, IChessboardValidatorStrategy chessboardValidatorStrategy)
+        public ChessboardField(int row, int column)
         {
-            _row = row;
-            _column = column;
-            _tipService = tipService;
-            ChessboardValidatorStrategy = chessboardValidatorStrategy;
+            Row = row;
+            Column = column;
+            _tipService = UnityService.Instance.Get().Resolve<ITipService>();
             _thisLock = new object();
             ChangeRectangleColorCommand = new RelayCommand(ChangeColor);
             SetDefaultRectangleColorCommand = new RelayCommand(ChangeColor);
@@ -44,7 +43,11 @@ namespace EightQueensPuzzle
             }
         }
 
-        public IChessboardValidatorStrategy ChessboardValidatorStrategy { get; }
+        public int Row { get; }
+
+        public int Column { get; }
+
+        public bool IsPawnSet { get; private set; }
 
         private void SetPawn(object obj)
         {
@@ -52,6 +55,7 @@ namespace EightQueensPuzzle
             {
                 var queen = new ImageBrush { ImageSource = ImageHelper.QueenPawn };
                 CurrentFieldColor = queen;
+                IsPawnSet = true;
             }
         }
 

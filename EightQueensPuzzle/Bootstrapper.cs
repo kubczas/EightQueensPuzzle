@@ -1,6 +1,7 @@
 ﻿using BaseReuseServices;
 using EightQueensPuzzle.Models;
 using EightQueensPuzzle.Services;
+using EightQueensPuzzle.Services.Constraints;
 using EightQueensPuzzle.Services.ValidationStrategy;
 using EightQueensPuzzle.Views;
 using Microsoft.Practices.Unity;
@@ -16,10 +17,12 @@ namespace EightQueensPuzzle
             UnityService.Instance.Get().
                 RegisterType<BoardPage>().
                 RegisterType<MenuPage>().
-                RegisterType<ITipService, TipService>().
-                RegisterType<IChessboardValidatorStrategy, QueenValidatorStrategy>().
-                RegisterType<IChessboardValidatorManager, CheesboardValidatorManager>().
-                RegisterType<IChessboard, Chessboard>();
+                RegisterType<IChessboard, Chessboard>(new ContainerControlledLifetimeManager()).
+                RegisterType<IConstraintFactory, ConstraintFactory>().
+                RegisterType<IChessboardValidatorManager, CheesboardValidatorManager>(
+                    new ContainerControlledLifetimeManager()).
+                RegisterType<ITipService, TipService>(new ContainerControlledLifetimeManager());
+
         }
 
     }

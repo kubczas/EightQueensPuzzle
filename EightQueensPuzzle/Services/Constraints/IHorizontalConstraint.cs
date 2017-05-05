@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EightQueensPuzzle.Services
+namespace EightQueensPuzzle.Services.Constraints
 {
-    class CheesboardValidator
+    public interface IHorizontalConstraint : IConstraint
     {
     }
 }
