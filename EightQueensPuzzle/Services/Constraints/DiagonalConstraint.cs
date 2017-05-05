@@ -1,70 +1,86 @@
 ﻿using System.Linq;
 using EightQueensPuzzle.Models;
+using Extenstions;
 
 namespace EightQueensPuzzle.Services.Constraints
 {
-    internal class DiagonalConstraint : IDiagonalConstraint
+    internal class DiagonalConstraint : ConstraintBase
     {
-        private readonly IChessboard _chessboard;
+        private delegate int FieldCalculation(int currentPosition);
+        private FieldCalculation _rowCalculation;
+        private FieldCalculation _columnCalculation;
 
-        internal DiagonalConstraint(IChessboard chessboard)
-        {
-            _chessboard = chessboard;
-        }
+        internal DiagonalConstraint(IChessboard chessboard) : base(chessboard){}
 
-        public bool IsConstraintMet(ChessboardField destinationChessboardField)
+        public override bool IsConstraintMet(ChessboardField destinationChessboardField)
         {
             return CheckFirstDiagonal(destinationChessboardField) && CheckSecondDiagonal(destinationChessboardField);
         }
 
-        private bool CheckFirstDiagonal(ChessboardField destinationChessboardField)
+        public override bool IsConstraintMet(ChessboardField destinationChessboardField, int scope)
         {
-            int column = destinationChessboardField.Column, row = destinationChessboardField.Row;
-            while (column>=0&&row>=0)
-            {
-                var currentField = _chessboard.ChessboardFields.FirstOrDefault(field => field.Row==row && field.Column==column);
-                if (currentField != null && currentField.IsPawnSet)
-                    return false;
-                column--;
-                row--;
-            }
+            return CheckFirstDiagonal(destinationChessboardField, scope) && CheckSecondDiagonal(destinationChessboardField, scope);
+        }
 
-            column = destinationChessboardField.Column;
-            row = destinationChessboardField.Row;
-            while (column < _chessboard.ChessboardSize && row < _chessboard.ChessboardSize)
+        private bool CheckSecondDiagonal(ChessboardField destinationChessboardField, int? scope = null)
+        {
+            return CheckFirstDiagonalTowardsRightUpDirection(destinationChessboardField, scope) && CheckFirstDiagonalTowardsLeftDownDirection(destinationChessboardField, scope);
+        }
+
+        private bool CheckFirstDiagonal(ChessboardField destinationChessboardField, int? scope = null)
+        {
+            return CheckFirstDiagonalTowardsLeftUpDirection(destinationChessboardField, scope) && CheckFirstDiagonalTowardsRightDownDirection(destinationChessboardField, scope);
+        }
+
+        private bool CheckFirstDiagonalTowardsRightDownDirection(ChessboardField destinationChessboardField, int? scope = null)
+        {
+            _rowCalculation += IncreaseIndex;
+            _columnCalculation += IncreaseIndex;
+            return ValidateDiagonal(destinationChessboardField.Row, destinationChessboardField.Column, scope);
+        }
+
+        private bool CheckFirstDiagonalTowardsLeftUpDirection(ChessboardField destinationChessboardField, int? scope = null)
+        {
+            _rowCalculation += DecreaseIndex;
+            _columnCalculation += DecreaseIndex;
+            return ValidateDiagonal(destinationChessboardField.Row, destinationChessboardField.Column, scope);
+        }
+
+        private bool CheckFirstDiagonalTowardsLeftDownDirection(ChessboardField destinationChessboardField, int? scope = null)
+        {
+            _rowCalculation += IncreaseIndex;
+            _columnCalculation += DecreaseIndex;
+            return ValidateDiagonal(destinationChessboardField.Row, destinationChessboardField.Column, scope);
+        }
+
+        private bool CheckFirstDiagonalTowardsRightUpDirection(ChessboardField destinationChessboardField, int? scope = null)
+        {
+            _rowCalculation += DecreaseIndex;
+            _columnCalculation += IncreaseIndex;
+            return ValidateDiagonal(destinationChessboardField.Row, destinationChessboardField.Column, scope);
+        }
+
+        private bool ValidateDiagonal(int row, int column, int? scope = null)
+        {
+            while (AreValuesInChessboardSizeScope(column, row, scope))
             {
-                var currentField = _chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == column);
+                var currentField = Chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == column);
                 if (currentField != null && currentField.IsPawnSet)
                     return false;
-                column++;
-                row++;
+                column = _columnCalculation(column);
+                row = _rowCalculation(row);
             }
             return true;
         }
 
-        private bool CheckSecondDiagonal(ChessboardField destinationChessboardField)
+        private static int DecreaseIndex(int index)
         {
-            int column = destinationChessboardField.Column, row = destinationChessboardField.Row;
-            while (column < _chessboard.ChessboardSize && row >= 0)
-            {
-                var currentField = _chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == column);
-                if (currentField != null && currentField.IsPawnSet)
-                    return false;
-                column++;
-                row--;
-            }
+            return index - 1;
+        }
 
-            column = destinationChessboardField.Column;
-            row = destinationChessboardField.Row;
-            while (column >= 0 && row < _chessboard.ChessboardSize)
-            {
-                var currentField = _chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == column);
-                if (currentField != null && currentField.IsPawnSet)
-                    return false;
-                column--;
-                row++;
-            }
-            return true;
+        private static int IncreaseIndex(int index)
+        {
+            return index + 1;
         }
     }
 }

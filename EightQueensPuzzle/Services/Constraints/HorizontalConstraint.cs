@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EightQueensPuzzle.Models;
+﻿using EightQueensPuzzle.Models;
+using Extenstions;
 
 namespace EightQueensPuzzle.Services.Constraints
 {
-    internal class HorizontalConstraint : IHorizontalConstraint
+    internal class HorizontalConstraint : ConstraintBase
     {
-        private readonly IChessboard _chessboard;
+        internal HorizontalConstraint(IChessboard chessboard) : base(chessboard){}
 
-        internal HorizontalConstraint(IChessboard chessboard)
+        public override bool IsConstraintMet(ChessboardField destinationChessboardField)
         {
-            _chessboard = chessboard;
+            return ExecuteConstraintPredicate(field => field.Row == destinationChessboardField.Row);
         }
 
-        public bool IsConstraintMet(ChessboardField destinationChessboardField)
+        public override bool IsConstraintMet(ChessboardField destinationChessboardField, int scope)
         {
-            return _chessboard.ChessboardFields.
-                Where(field => field.Column == destinationChessboardField.Column).
-                All(chessboardField => !chessboardField.IsPawnSet);
+            return ExecuteConstraintPredicate(field => field.Row.IsWithin(destinationChessboardField.Row, scope));
         }
     }
 }

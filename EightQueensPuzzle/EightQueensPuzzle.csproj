@@ -104,14 +104,13 @@
     <Compile Include="Models\GameSettings.cs" />
     <Compile Include="Models\IChessboard.cs" />
     <Compile Include="Services\CheesboardValidatorManager.cs" />
+    <Compile Include="Services\Constraints\ConstraintBase.cs" />
     <Compile Include="Services\Constraints\ConstraintFactory.cs" />
     <Compile Include="Services\Constraints\DiagonalConstraint.cs" />
     <Compile Include="Services\Constraints\HorizontalConstraint.cs" />
     <Compile Include="Services\Constraints\IConstraint.cs" />
     <Compile Include="Services\Constraints\IConstraintFactory.cs" />
-    <Compile Include="Services\Constraints\IDiagonalConstraint.cs" />
-    <Compile Include="Services\Constraints\IHorizontalConstraint.cs" />
-    <Compile Include="Services\Constraints\IVerticalConstraint.cs" />
+    <Compile Include="Services\Constraints\KnightConstraint.cs" />
     <Compile Include="Services\Constraints\VerticalConstraint.cs" />
     <Compile Include="Services\IChessboardValidatorManager.cs" />
     <Compile Include="Services\IChessboardValidatorStrategy.cs" />
@@ -212,6 +211,10 @@
     <ProjectReference Include="..\BaseReuseServices\BaseReuseServices.csproj">
       <Project>{B0D219CF-6471-49BA-9A91-723189BDFC8A}</Project>
       <Name>BaseReuseServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extenstions\Extenstions.csproj">
+      <Project>{4343337D-D05D-4C26-B776-F2B066BF99C4}</Project>
+      <Name>Extenstions</Name>
     </ProjectReference>
     <ProjectReference Include="..\WpfUtilities\WpfUtilities.csproj">
       <Project>{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F}</Project>

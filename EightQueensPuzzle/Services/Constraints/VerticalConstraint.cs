@@ -1,22 +1,22 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EightQueensPuzzle.Models;
+using Extenstions;
 
 namespace EightQueensPuzzle.Services.Constraints
 {
-    internal class VerticalConstraint : IVerticalConstraint
+    internal class VerticalConstraint : ConstraintBase
     {
-        private readonly IChessboard _chessboard;
+        internal VerticalConstraint(IChessboard chessboard) : base(chessboard){}
 
-        internal VerticalConstraint(IChessboard chessboard)
+        public override bool IsConstraintMet(ChessboardField destinationChessboardField)
         {
-            _chessboard = chessboard;
+            return ExecuteConstraintPredicate(field => field.Column == destinationChessboardField.Column);
         }
 
-        public bool IsConstraintMet(ChessboardField destinationChessboardField)
+        public override bool IsConstraintMet(ChessboardField destinationChessboardField, int scope)
         {
-            return _chessboard.ChessboardFields.
-                Where(field => field.Row == destinationChessboardField.Row).
-                All(chessboardField => !chessboardField.IsPawnSet);
+            return ExecuteConstraintPredicate(field => field.Column.IsWithin(destinationChessboardField.Column, scope));
         }
     }
 }
