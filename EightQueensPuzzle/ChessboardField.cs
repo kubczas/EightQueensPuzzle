@@ -22,8 +22,8 @@ namespace EightQueensPuzzle
             _tipService = UnityService.Instance.Get().Resolve<ITipService>();
             _thisLock = new object();
             ChangeRectangleColorCommand = new RelayCommand(ChangeColor);
-            SetDefaultRectangleColorCommand = new RelayCommand(ChangeColor);
-            ClickRectangleCommand = new RelayCommand(SetPawn);
+            SetDefaultRectangleColorCommand = new RelayCommand(SetDefaultFieldColor);
+            ClickRectangleCommand = new RelayCommand(ManagePawn);
             CurrentFieldColor = DefaultFieldColor;
         }
 
@@ -49,13 +49,21 @@ namespace EightQueensPuzzle
 
         public bool IsPawnSet { get; private set; }
 
-        private void SetPawn(object obj)
+        private void ManagePawn(object obj)
         {
             lock (_thisLock)
             {
-                var queen = new ImageBrush { ImageSource = ImageHelper.QueenPawn };
-                CurrentFieldColor = queen;
-                IsPawnSet = true;
+                if (!IsPawnSet)
+                {
+                    var queen = new ImageBrush {ImageSource = ImageHelper.QueenPawn};
+                    CurrentFieldColor = queen;
+                    IsPawnSet = true;
+                }
+                else
+                {
+                    IsPawnSet = false;
+                    CurrentFieldColor = DefaultFieldColor;
+                }
             }
         }
 
@@ -63,9 +71,17 @@ namespace EightQueensPuzzle
         {
             lock (_thisLock)
             {
-                var brush = CurrentFieldColor as SolidColorBrush;
-                if (brush != null)
+                if (CurrentFieldColor is SolidColorBrush)
                     CurrentFieldColor = _tipService.GetChangedFieldColor(this);
+            }
+        }
+
+        private void SetDefaultFieldColor(object obj)
+        {
+            lock (_thisLock)
+            {
+                if (!IsPawnSet)
+                    CurrentFieldColor = DefaultFieldColor;
             }
         }
 

@@ -24,90 +24,50 @@ namespace EightQueensPuzzle.Services.Constraints
 
         private bool ValidUpLeftDirection(ChessboardField destinationChessboardField)
         {
-            int row = destinationChessboardField.Row+2;
-            if (AreValuesInChessboardSizeScope(destinationChessboardField.Column-1, row))
-            {
-                var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == destinationChessboardField.Column - 1);
-                return knightDestination != null && !knightDestination.IsPawnSet;
-            }
-            return false;
+            return ValidKnightPosition(destinationChessboardField.Column - 1, destinationChessboardField.Row + 2);
         }
 
         private bool ValidUpRightDirection(ChessboardField destinationChessboardField)
         {
-            int row = destinationChessboardField.Row + 2;
-            if (AreValuesInChessboardSizeScope(destinationChessboardField.Column + 1, row))
-            {
-                var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == destinationChessboardField.Column + 1);
-                return knightDestination != null && !knightDestination.IsPawnSet;
-            }
-            return false;
+            return ValidKnightPosition(destinationChessboardField.Column + 1, destinationChessboardField.Row + 2);
         }
 
         private bool ValidDownLeftDirection(ChessboardField destinationChessboardField)
         {
-            int row = destinationChessboardField.Row - 2;
-            if (AreValuesInChessboardSizeScope(destinationChessboardField.Column - 1, row))
-            {
-                var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == destinationChessboardField.Column - 1);
-                return knightDestination != null && !knightDestination.IsPawnSet;
-            }
-            return false;
+            return ValidKnightPosition(destinationChessboardField.Column - 1, destinationChessboardField.Row - 2);
         }
 
         private bool ValidDownRightDirection(ChessboardField destinationChessboardField)
         {
-            int row = destinationChessboardField.Row - 2;
-            if (AreValuesInChessboardSizeScope(destinationChessboardField.Column + 1, row))
-            {
-                var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == destinationChessboardField.Column + 1);
-                return knightDestination != null && !knightDestination.IsPawnSet;
-            }
-            return false;
+            return ValidKnightPosition(destinationChessboardField.Column + 1, destinationChessboardField.Row - 2);
         }
 
         private bool ValidLeftUpDirection(ChessboardField destinationChessboardField)
         {
-            int column = destinationChessboardField.Column - 2;
-            if (AreValuesInChessboardSizeScope(destinationChessboardField.Row - 1, column))
-            {
-                var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Column == column && field.Row == destinationChessboardField.Row - 1);
-                return knightDestination != null && !knightDestination.IsPawnSet;
-            }
-            return false;
+            return ValidKnightPosition(destinationChessboardField.Column - 2, destinationChessboardField.Row - 1);
         }
 
         private bool ValidRightUpDirection(ChessboardField destinationChessboardField)
         {
-            int column = destinationChessboardField.Column + 2;
-            if (AreValuesInChessboardSizeScope(destinationChessboardField.Column + 1, column))
-            {
-                var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Column == column && field.Row == destinationChessboardField.Row + 1);
-                return knightDestination != null && !knightDestination.IsPawnSet;
-            }
-            return false;
+            return ValidKnightPosition(destinationChessboardField.Column + 2, destinationChessboardField.Row + 1);
         }
 
         private bool ValidLeftDownDirection(ChessboardField destinationChessboardField)
         {
-            int column = destinationChessboardField.Row - 2;
-            if (AreValuesInChessboardSizeScope(destinationChessboardField.Column - 1, column))
-            {
-                var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Column == column && field.Row == destinationChessboardField.Row - 1);
-                return knightDestination != null && !knightDestination.IsPawnSet;
-            }
-            return false;
+            return ValidKnightPosition(destinationChessboardField.Column - 2, destinationChessboardField.Row + 1);
         }
 
         private bool ValidRightDownDirection(ChessboardField destinationChessboardField)
         {
-            int column = destinationChessboardField.Column + 2;
-            if (AreValuesInChessboardSizeScope(destinationChessboardField.Column + 1, column))
-            {
-                var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Column == column && field.Row == destinationChessboardField.Row + 1);
-                return knightDestination != null && !knightDestination.IsPawnSet;
-            }
-            return false;
+            return ValidKnightPosition(destinationChessboardField.Column + 2, destinationChessboardField.Row + 1);
+        }
+
+        private bool ValidKnightPosition(int column, int row)
+        {
+            if (!AreValuesInChessboardSizeScope(column, row)) return false;
+
+            var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == column);
+            return knightDestination != null && !knightDestination.IsPawnSet;
         }
     }
 }
