@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using BaseReuseServices;
+using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Services;
+using EightQueensPuzzle.Services.Timer;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Unity;
 
 namespace EightQueensPuzzle.ViewModels
 {
-    class GameViewModel : BindableBase
+    public class GameViewModel : BindableBase, IObserver
     {
-        private readonly Timer _gameTimer = new System.Timers.Timer();
-        private int expectedTime = 90;
         private string _gameTime = "90";
+        private TimerServiceBase _timerServiceBase;
 
         public GameViewModel()
         {
-            InitTimer();
+            var timerServiceManager = UnityService.Instance.Get().Resolve<ITimerServiceManager>() as TimerServiceManager;
+            InitTimer(timerServiceManager);
         }
 
         public string Timer
         {
-            get { return _gameTime; }
+            get
+            {
+                return _gameTime;
+            }
             set
             {
                 _gameTime = value;
@@ -29,16 +31,16 @@ namespace EightQueensPuzzle.ViewModels
             }
         }
 
-        private void InitTimer()
+        public void Update()
         {
-            _gameTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            _gameTimer.Interval = 1000;
-            _gameTimer.Enabled = true;
+            Timer = _timerServiceBase.TimerValue;
         }
 
-        private void OnTimedEvent(object sender, EventArgs e)
+        private void InitTimer(ITimerServiceManager timerServiceManager)
         {
-            Timer = (expectedTime--).ToString();
+            if (timerServiceManager != null)
+                _timerServiceBase = timerServiceManager.GetTimer(GameSettings.Instance.SelectedGameType.Timer);
+            _timerServiceBase.InitTimer(this);
         }
     }
 }

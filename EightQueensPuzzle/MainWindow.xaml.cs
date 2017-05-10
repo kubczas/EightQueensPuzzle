@@ -1,7 +1,7 @@
-﻿using EightQueensPuzzle.ViewModels;
+﻿using BaseReuseServices;
 using EightQueensPuzzle.Views;
 using MahApps.Metro.Controls;
-using WpfUtilities;
+using Microsoft.Practices.Unity;
 
 namespace EightQueensPuzzle
 {
@@ -13,7 +13,7 @@ namespace EightQueensPuzzle
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Content = new MenuPage();
+            MainFrame.Content = UnityService.Instance.Get().Resolve(typeof(MenuPage));
         }
     }
 }

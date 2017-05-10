@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using MahApps.Metro.Controls;
 
 namespace EightQueensPuzzle.Views
 {
@@ -9,15 +12,38 @@ namespace EightQueensPuzzle.Views
     /// </summary>
     public partial class MenuPage : Page
     {
+        private IDictionary<string, Page> _navigationStrategy; 
         public MenuPage()
         {
             InitializeComponent();
+            InitNavigationStrategy();
         }
 
-        private void NavigateToBoard(object sender, RoutedEventArgs e)
+        private IDictionary<string, Page> InitNavigationStrategy()
         {
-            BoardPage page = new BoardPage();
-            this.NavigationService.Navigate(page);
+            return new Dictionary<string, Page>
+            {
+                {"Play", new BoardPage()},
+                {"Settings", new SettingsPage()},
+                {"Help", null}
+            };
+        }
+
+        private void Navigate(object obj, RoutedEventArgs routedEventArgs)
+        {
+            try
+            {
+                if(_navigationStrategy==null)
+                    _navigationStrategy = InitNavigationStrategy();
+                var tile = (Tile) obj;
+                var navigationService = NavigationService;
+                navigationService?.Navigate(_navigationStrategy[tile.Title]);
+            }
+            catch (InvalidCastException) { }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
     }
 }

@@ -16,13 +16,18 @@ using System.Windows.Shapes;
 namespace EightQueensPuzzle.Views
 {
     /// <summary>
-    /// Interaction logic for BoardPage.xaml
+    /// Interaction logic for SettingsPage.xaml
     /// </summary>
-    public partial class BoardPage : Page
+    public partial class SettingsPage : Page
     {
-        public BoardPage()
+        public SettingsPage()
         {
             InitializeComponent();
+        }
+
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.GoBack();
         }
     }
 }

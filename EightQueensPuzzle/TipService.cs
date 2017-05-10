@@ -17,7 +17,7 @@ namespace EightQueensPuzzle
         {
             if (!IsDefaultColor(chessboardField.CurrentFieldColor as SolidColorBrush))
                 return FieldColorHelper.DefaultFieldColor;
-            return _validatorManager.GetChessboardValidatorStrategy(GameSettings.SelectedPawn).Validate(chessboardField) ? FieldColorHelper.GoodFieldColor : FieldColorHelper.BadFieldColor;
+            return _validatorManager.GetChessboardValidatorStrategy(GameSettings.Instance.SelectedPawn).Validate(chessboardField) ? FieldColorHelper.GoodFieldColor : FieldColorHelper.BadFieldColor;
         }
 
         private static bool IsDefaultColor(SolidColorBrush color)

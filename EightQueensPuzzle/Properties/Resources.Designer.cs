@@ -83,16 +83,6 @@ namespace EightQueensPuzzle.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Queen_512 {
-            get {
-                object obj = ResourceManager.GetObject("Queen_512", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap White_Queen_Finish {
             get {
                 object obj = ResourceManager.GetObject("White_Queen_Finish", resourceCulture);

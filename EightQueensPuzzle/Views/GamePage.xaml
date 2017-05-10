@@ -26,7 +26,17 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <local:NavigationTabUserControl></local:NavigationTabUserControl>
+            <WrapPanel>
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="45" Height="45" Click="Back">
+                    <Rectangle Width="20"
+                Height="20"
+                Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_left}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </WrapPanel>
         </StackPanel>
         <local:BoardUserControl Grid.Column="0" Grid.Row="1" Grid.RowSpan="2"/>
         <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="1">

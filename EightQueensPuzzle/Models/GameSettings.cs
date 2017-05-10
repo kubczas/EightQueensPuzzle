@@ -1,9 +1,35 @@
-﻿using EightQueensPuzzle.Enums;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using EightQueensPuzzle.Enums;
 
 namespace EightQueensPuzzle.Models
 {
-    public static class GameSettings
+    public class GameSettings
     {
-        public static Pawn SelectedPawn { get; set; } = Pawn.Queen; //todo
+        private static GameSettings _instance;
+        private ObservableCollection<string> _gameTypeNames; 
+
+        private GameSettings()
+        {
+            
+        }
+
+        public static GameSettings Instance => _instance ?? new GameSettings();
+
+        public Pawn SelectedPawn { get; private set; } = Pawn.Queen;
+
+        public bool EnableTips { get; private set; }
+
+        public int MaxTime { get; private set; } = 120;
+
+        public IGameType SelectedGameType { get; private set; } = new TryToMakeIt(50,50);
+
+        public ObservableCollection<string> GameTypeNames => _gameTypeNames ?? (_gameTypeNames = new ObservableCollection<string>()
+        {
+            DoNotMakeMistakes.GameTypeName,
+            TryToMakeIt.GameTypeName,
+            WinAsSoonAsPossible.GameTypeName
+        });
     }
 }

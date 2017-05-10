@@ -1,0 +1,102 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:viewModels="clr-namespace:EightQueensPuzzle.ViewModels"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      x:Class="EightQueensPuzzle.Views.SettingsPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="800"
+      Title="SettingsPage">
+
+    <Page.DataContext>
+        <viewModels:SettingsViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <StackPanel>
+            <WrapPanel>
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="45" Height="45" Click="Back">
+                    <Rectangle Width="20"
+                    Height="20"
+                    Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_left}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10"><Run Text="Selected game:"/></TextBlock>
+                <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10" Text="{Binding SelectedGameDescription}"></TextBlock>
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="45" Height="45" Command="{Binding DisplaySelectedGameDescription}">
+                    <Rectangle Width="20"
+                    Height="20"
+                    Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_information_circle}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </WrapPanel>
+            <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10"><Run Text="Select pawn type:"/></TextBlock>
+            <WrapPanel HorizontalAlignment="Center" Margin="10">
+                <controls:Tile Title="Pawn" TiltFactor="1" Width="100" Height="100">
+                    <Image  Height="50" Width="50" Source="..\Resources\pawn..png"></Image>
+                </controls:Tile>
+                <controls:Tile Title="Knight" Width="100" Height="100">
+                    <Image  Height="50" Width="50" Source="..\Resources\knight.png"></Image>
+                </controls:Tile>
+                <controls:Tile Title="Rook" Width="100" Height="100">
+                    <Image  Height="50" Width="50" Source="..\Resources\rook.png"></Image>
+                </controls:Tile>
+                <controls:Tile Title="Bishop" Width="100" Height="100">
+                    <Image  Height="50" Width="50" Source="..\Resources\bishop.png"></Image>
+                </controls:Tile>
+                <controls:Tile Title="Queen" Width="100" Height="100">
+                    <Image  Height="50" Width="50" Source="..\Resources\queen.png"></Image>
+                </controls:Tile>
+                <controls:Tile Title="King" Width="100" Height="100">
+                    <Image  Height="50" Width="50" Source="..\Resources\king.png"></Image>
+                </controls:Tile>
+            </WrapPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10" Grid.Row="0" Grid.Column="0">Game type</TextBlock>
+                <controls:SplitButton  
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Width="250" Height="20"
+                    SelectedItem="{Binding SelectedGameType}"
+                    ItemsSource="{Binding GameTypes}">
+                </controls:SplitButton>
+                <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="1" Grid.Column="0">Time max:</TextBlock>
+                <WrapPanel Grid.Row="1" Grid.Column="1">
+                    <TextBox controls:TextBoxHelper.ClearTextButton="True" Width="250" Height="20" AcceptsTab="False"/>
+                    <TextBlock Foreground="#64B5F6" FontSize="12" Margin="10">seconds</TextBlock>
+                </WrapPanel>
+                <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="2" Grid.Column="0">Enable tips:</TextBlock>
+                <controls:ToggleSwitch Margin="3" Foreground="#64B5F6" Grid.Row="2" Grid.Column="1" Width="250" HorizontalAlignment="Left"/>
+                <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="3" Grid.Column="0">Number of tips:</TextBlock>
+                <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="3" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left"/>
+                <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="4" Grid.Column="0">Max of mistakes:</TextBlock>
+                <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="4" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left"/>
+            </Grid>
+            
+                
+        </StackPanel>
+    </Grid>
+</Page>
