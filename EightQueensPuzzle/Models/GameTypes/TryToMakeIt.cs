@@ -1,8 +1,8 @@
 ﻿using EightQueensPuzzle.Enums;
 
-namespace EightQueensPuzzle.Models
+namespace EightQueensPuzzle.Models.GameTypes
 {
-    public class TryToMakeIt : IGameType
+    public class TryToMakeIt : GameSettingsBase
     {
         public TryToMakeIt(int numberOfTips, int maxTime)
         {
@@ -11,8 +11,8 @@ namespace EightQueensPuzzle.Models
         }
 
         public const string GameTypeName = "Try to make it";
-        public TimerType Timer => TimerType.TimerDecrease;
-        public int NumberOfTips { get; set; }
+        public override TimerType Timer => TimerType.TimerDecrease;
+        public override int NumberOfTips { get; }
         public int MaxTime { get; }
     }
 }

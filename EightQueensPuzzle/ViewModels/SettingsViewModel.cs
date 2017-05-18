@@ -2,6 +2,7 @@
 using System.Linq;
 using EightQueensPuzzle.Enums;
 using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Models.GameTypes;
 using Microsoft.Practices.Prism.Mvvm;
 
 namespace EightQueensPuzzle.ViewModels
@@ -34,10 +35,7 @@ namespace EightQueensPuzzle.ViewModels
 
         public string SelectedGameDescription => $"Selected Pawn: {SelectedPawn} \nSelected game type: {SelectedGameType}";
 
-        public object DisplaySelectedGameDescription
-        {
-            get { return string.Empty; }
-        }
+        public string DisplaySelectedGameDescription => string.Empty; //todo
 
         public ObservableCollection<string> GameTypes => _gameTypes ?? (_gameTypes = new ObservableCollection<string>()
         {

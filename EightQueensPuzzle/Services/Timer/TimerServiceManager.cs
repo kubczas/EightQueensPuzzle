@@ -13,9 +13,11 @@ namespace EightQueensPuzzle.Services.Timer
             {TimerType.TimerIncrease, new IncreaseTimer()}
         });
 
-        public TimerServiceBase GetTimer(TimerType timerType)
+        public TimerServiceBase GetTimer(TimerType timerType, int startTime)
         {
-            return TimerServiceStrategy[timerType];
+            var timerService = TimerServiceStrategy[timerType];
+            timerService.Time = startTime;
+            return timerService;
         }
     }
 }

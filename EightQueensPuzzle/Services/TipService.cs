@@ -1,8 +1,8 @@
 ﻿using System.Windows.Media;
 using EightQueensPuzzle.Models;
-using EightQueensPuzzle.Services;
+using EightQueensPuzzle.Models.GameTypes;
 
-namespace EightQueensPuzzle
+namespace EightQueensPuzzle.Services
 {
     public class TipService : ITipService
     {
@@ -17,7 +17,7 @@ namespace EightQueensPuzzle
         {
             if (!IsDefaultColor(chessboardField.CurrentFieldColor as SolidColorBrush))
                 return FieldColorHelper.DefaultFieldColor;
-            return _validatorManager.GetChessboardValidatorStrategy(GameSettings.Instance.SelectedPawn).Validate(chessboardField) ? FieldColorHelper.GoodFieldColor : FieldColorHelper.BadFieldColor;
+            return _validatorManager.GetChessboardValidatorStrategy(GameSettingsBase.SelectedPawn).Validate(chessboardField) ? FieldColorHelper.GoodFieldColor : FieldColorHelper.BadFieldColor;
         }
 
         private static bool IsDefaultColor(SolidColorBrush color)

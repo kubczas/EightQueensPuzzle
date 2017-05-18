@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Models.GameTypes;
 
 namespace EightQueensPuzzle.Services.Converters
 {

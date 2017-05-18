@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Timers;
-using EightQueensPuzzle.Models;
 
 namespace EightQueensPuzzle.Services.Timer
 {
     public class DecreaseTimer : TimerServiceBase
     {
-        public DecreaseTimer()
-        {
-            Time = GameSettings.Instance.MaxTime;
-        }
-
         public override void InitTimer(IObserver viewModel)
         {
             GameTimer.Elapsed += new ElapsedEventHandler(DecreaseTime);

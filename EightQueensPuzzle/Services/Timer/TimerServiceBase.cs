@@ -7,7 +7,7 @@ namespace EightQueensPuzzle.Services.Timer
     {
         private readonly List<IObserver> _observers = new List<IObserver>();
         protected readonly System.Timers.Timer GameTimer;
-        protected int Time;
+        public int Time { get; set; }
 
         protected TimerServiceBase()
         {

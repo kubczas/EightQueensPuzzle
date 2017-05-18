@@ -1,8 +1,8 @@
 ﻿using EightQueensPuzzle.Enums;
 
-namespace EightQueensPuzzle.Models
+namespace EightQueensPuzzle.Models.GameTypes
 {
-    public class DoNotMakeMistakes : IGameType
+    public class DoNotMakeMistakes : GameSettingsBase
     {
         public DoNotMakeMistakes(int possibleMistakes)
         {
@@ -10,8 +10,10 @@ namespace EightQueensPuzzle.Models
         }
 
         public const string GameTypeName = "Do not make mistakes";
-        public TimerType Timer => TimerType.TimerIncrease;
-        public int NumberOfTips => 0;
+        public override TimerType Timer => TimerType.TimerIncrease;
+
+        public override int NumberOfTips => 0;
+
         public int MaxMistakes { get; }
     }
 }

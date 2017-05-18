@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CommonServiceManager, Version=2011.4.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnityCommonServiceManager.1.0.1\lib\CommonServiceManager.dll</HintPath>
       <Private>True</Private>
@@ -134,12 +138,12 @@
     <Compile Include="Helpers\FieldColorHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Models\Chessboard.cs" />
-    <Compile Include="Models\DoNotMakeMistakes.cs" />
-    <Compile Include="Models\GameSettings.cs" />
+    <Compile Include="Models\GameTypes\DoNotMakeMistakes.cs" />
+    <Compile Include="Models\GameTypes\GameSettingsBase.cs" />
     <Compile Include="Models\IChessboard.cs" />
     <Compile Include="Models\IGameType.cs" />
-    <Compile Include="Models\TryToMakeIt.cs" />
-    <Compile Include="Models\WinAsSoonAsPossible.cs" />
+    <Compile Include="Models\GameTypes\TryToMakeIt.cs" />
+    <Compile Include="Models\GameTypes\WinAsSoonAsPossible.cs" />
     <Compile Include="Services\CheesboardValidatorManager.cs" />
     <Compile Include="Services\Constraints\ConstraintBase.cs" />
     <Compile Include="Services\Constraints\ConstraintFactory.cs" />
@@ -156,9 +160,11 @@
     <Compile Include="Services\IChessboardValidatorManager.cs" />
     <Compile Include="Services\IChessboardValidatorStrategy.cs" />
     <Compile Include="Services\Converters\TimeMaxConverter.cs" />
+    <Compile Include="Services\IMapperService.cs" />
     <Compile Include="Services\IObserver.cs" />
     <Compile Include="Services\ISubject.cs" />
     <Compile Include="Services\ITipService.cs" />
+    <Compile Include="Services\MapperService.cs" />
     <Compile Include="Services\Timer\DecreaseTimer.cs" />
     <Compile Include="Services\Timer\IncreaseTimer.cs" />
     <Compile Include="Services\Timer\ITimerServiceManager.cs" />

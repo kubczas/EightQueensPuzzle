@@ -1,5 +1,5 @@
 ﻿using BaseReuseServices;
-using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Models.GameTypes;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Timer;
 using Microsoft.Practices.Prism.Mvvm;
@@ -36,10 +36,10 @@ namespace EightQueensPuzzle.ViewModels
             Timer = _timerServiceBase.TimerValue;
         }
 
-        private void InitTimer(ITimerServiceManager timerServiceManager)
+        private void InitTimer(ITimerServiceManager timerServiceManager) //it should be launch after button play will be clicked
         {
             if (timerServiceManager != null)
-                _timerServiceBase = timerServiceManager.GetTimer(GameSettings.Instance.SelectedGameType.Timer);
+                _timerServiceBase = timerServiceManager.GetTimer(new TryToMakeIt(10,20).Timer,100);
             _timerServiceBase.InitTimer(this);
         }
     }
