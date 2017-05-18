@@ -1,4 +1,6 @@
-﻿namespace EightQueensPuzzle.Services
+﻿using EightQueensPuzzle.Models;
+
+namespace EightQueensPuzzle.Services
 {
     public interface IChessboardValidatorStrategy
     {

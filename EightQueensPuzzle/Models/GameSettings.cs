@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using EightQueensPuzzle.Enums;
 
 namespace EightQueensPuzzle.Models
@@ -24,12 +22,5 @@ namespace EightQueensPuzzle.Models
         public int MaxTime { get; private set; } = 120;
 
         public IGameType SelectedGameType { get; private set; } = new TryToMakeIt(50,50);
-
-        public ObservableCollection<string> GameTypeNames => _gameTypeNames ?? (_gameTypeNames = new ObservableCollection<string>()
-        {
-            DoNotMakeMistakes.GameTypeName,
-            TryToMakeIt.GameTypeName,
-            WinAsSoonAsPossible.GameTypeName
-        });
     }
 }

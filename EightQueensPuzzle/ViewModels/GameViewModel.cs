@@ -14,7 +14,7 @@ namespace EightQueensPuzzle.ViewModels
 
         public GameViewModel()
         {
-            var timerServiceManager = UnityService.Instance.Get().Resolve<ITimerServiceManager>() as TimerServiceManager;
+            ITimerServiceManager timerServiceManager = UnityService.Instance.Get().Resolve<ITimerServiceManager>();
             InitTimer(timerServiceManager);
         }
 

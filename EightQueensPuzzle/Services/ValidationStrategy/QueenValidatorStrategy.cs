@@ -1,4 +1,5 @@
 ﻿using BaseReuseServices;
+using EightQueensPuzzle.Models;
 using EightQueensPuzzle.Services.Constraints;
 
 namespace EightQueensPuzzle.Services.ValidationStrategy

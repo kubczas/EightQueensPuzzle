@@ -12,7 +12,7 @@ namespace EightQueensPuzzle.Models
 
         public const string GameTypeName = "Try to make it";
         public TimerType Timer => TimerType.TimerDecrease;
-        public int NumberOfTips { get; }
+        public int NumberOfTips { get; set; }
         public int MaxTime { get; }
     }
 }

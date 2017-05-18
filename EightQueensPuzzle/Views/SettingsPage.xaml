@@ -5,15 +5,27 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:viewModels="clr-namespace:EightQueensPuzzle.ViewModels"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      x:Class="EightQueensPuzzle.Views.SettingsPage"
+    xmlns:validationRules="clr-namespace:EightQueensPuzzle.ValidationRules"
+    xmlns:services="clr-namespace:EightQueensPuzzle.Services"
+    xmlns:converters="clr-namespace:EightQueensPuzzle.Services.Converters"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:command="http://www.galasoft.ch/mvvmlight"
+    x:Class="EightQueensPuzzle.Views.SettingsPage"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="800"
+    MinWidth="500"
+    MinHeight="450"
       Title="SettingsPage">
 
     <Page.DataContext>
         <viewModels:SettingsViewModel/>
     </Page.DataContext>
+    <Page.Resources>
+        <converters:TimeMaxConverter x:Key="TimeMaxConverter"/>
+        <converters:EnableTipsConverter x:Key="EnableTipsConverter"/>
+        <converters:NumberOfPossibleMistakesConverter x:Key="NumberOfPossibleMistakesConverter"/>
+        <converters:NumberOfTipsConverter x:Key="NumberOfTipsConverter"/>
+    </Page.Resources>
     <Grid>
         <StackPanel>
             <WrapPanel>
@@ -27,41 +39,58 @@
                     </Rectangle>
                 </Button>
             </WrapPanel>
-            <WrapPanel>
-                <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10"><Run Text="Selected game:"/></TextBlock>
-                <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10" Text="{Binding SelectedGameDescription}"></TextBlock>
-                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="45" Height="45" Command="{Binding DisplaySelectedGameDescription}">
-                    <Rectangle Width="20"
-                    Height="20"
-                    Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_information_circle}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </Button>
+            <WrapPanel HorizontalAlignment="Center">
+                <controls:FlipView Height="300" Width="800"
+                   IsBannerEnabled="True" 
+                   SelectedIndex="{Binding SelectedPawnIndex}"
+                   Margin="0, 0, 10, 0">
+                    <controls:FlipView.Items>
+                        <Grid Background="#64B5F6">
+                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_chess_pawn}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                        <Grid Background="#64B5F6">
+                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_chess_horse}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                        <Grid Background="#64B5F6">
+                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_chess_rook}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                        <Grid Background="#64B5F6">
+                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_chess_bishop}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                        <Grid Background="#64B5F6">
+                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_chess_queen}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                        <Grid Background="#64B5F6">
+                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_chess_king}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </controls:FlipView.Items>
+                </controls:FlipView>
             </WrapPanel>
-            <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10"><Run Text="Select pawn type:"/></TextBlock>
-            <WrapPanel HorizontalAlignment="Center" Margin="10">
-                <controls:Tile Title="Pawn" TiltFactor="1" Width="100" Height="100">
-                    <Image  Height="50" Width="50" Source="..\Resources\pawn..png"></Image>
-                </controls:Tile>
-                <controls:Tile Title="Knight" Width="100" Height="100">
-                    <Image  Height="50" Width="50" Source="..\Resources\knight.png"></Image>
-                </controls:Tile>
-                <controls:Tile Title="Rook" Width="100" Height="100">
-                    <Image  Height="50" Width="50" Source="..\Resources\rook.png"></Image>
-                </controls:Tile>
-                <controls:Tile Title="Bishop" Width="100" Height="100">
-                    <Image  Height="50" Width="50" Source="..\Resources\bishop.png"></Image>
-                </controls:Tile>
-                <controls:Tile Title="Queen" Width="100" Height="100">
-                    <Image  Height="50" Width="50" Source="..\Resources\queen.png"></Image>
-                </controls:Tile>
-                <controls:Tile Title="King" Width="100" Height="100">
-                    <Image  Height="50" Width="50" Source="..\Resources\king.png"></Image>
-                </controls:Tile>
-            </WrapPanel>
-            <Grid>
+            <Grid HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -70,11 +99,12 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="130"></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10" Grid.Row="0" Grid.Column="0">Game type</TextBlock>
-                <controls:SplitButton  
+                <controls:SplitButton 
+                    x:Name="GameTypeSplitButton"
                     Grid.Row="0"
                     Grid.Column="1"
                     VerticalAlignment="Center"
@@ -85,18 +115,24 @@
                 </controls:SplitButton>
                 <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="1" Grid.Column="0">Time max:</TextBlock>
                 <WrapPanel Grid.Row="1" Grid.Column="1">
-                    <TextBox controls:TextBoxHelper.ClearTextButton="True" Width="250" Height="20" AcceptsTab="False"/>
+                    <TextBox controls:TextBoxHelper.ClearTextButton="True" Width="250" Height="20" AcceptsTab="False" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource TimeMaxConverter}}">
+                        <TextBox.Text>
+                            <Binding Path="TimeMax" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationRules:NumericTextBoxValidationRule ValidationStep="RawProposedValue"></validationRules:NumericTextBoxValidationRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Foreground="#64B5F6" FontSize="12" Margin="10">seconds</TextBlock>
                 </WrapPanel>
                 <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="2" Grid.Column="0">Enable tips:</TextBlock>
-                <controls:ToggleSwitch Margin="3" Foreground="#64B5F6" Grid.Row="2" Grid.Column="1" Width="250" HorizontalAlignment="Left"/>
+                <controls:ToggleSwitch x:Name="TipsToggleSwitch" Margin="3" Foreground="#64B5F6" Grid.Row="2" Grid.Column="1" Width="250" HorizontalAlignment="Left" IsChecked="{Binding IsTipsEnabled}" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource EnableTipsConverter}}"/>
                 <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="3" Grid.Column="0">Number of tips:</TextBlock>
-                <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="3" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left"/>
-                <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="4" Grid.Column="0">Max of mistakes:</TextBlock>
-                <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="4" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left"/>
+                <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="3" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left" Value="{Binding NumberOfTips}" IsEnabled="{Binding ElementName=TipsToggleSwitch, Path=IsChecked}"/>
+                <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="4" Grid.Column="0">Number of possible mistakes:</TextBlock>
+                <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="4" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left" Value="{Binding NumberOfPossibleMistakes}" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource NumberOfPossibleMistakesConverter}}"/>
             </Grid>
-            
-                
         </StackPanel>
     </Grid>
 </Page>

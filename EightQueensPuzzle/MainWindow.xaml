@@ -7,9 +7,10 @@
         xmlns:local="clr-namespace:EightQueensPuzzle"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="Eight Queens Puzzle" Height="350" Width="525">
+        MinHeight="700" MinWidth="800"
+        Title="Eight Queens Puzzle" Height="700" Width="800">
     <Frame Name="MainFrame" NavigationUIVisibility="Hidden">
-        
+
     </Frame>
 </Controls:MetroWindow>
 

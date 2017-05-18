@@ -2,7 +2,7 @@
 
 namespace EightQueensPuzzle.Services.Timer
 {
-    internal interface ITimerServiceManager
+    public interface ITimerServiceManager
     {
         TimerServiceBase GetTimer(TimerType timerType);
     }

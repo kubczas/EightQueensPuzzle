@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 
-namespace EightQueensPuzzle
+namespace EightQueensPuzzle.Helpers
 {
     public static class ImageHelper
     {

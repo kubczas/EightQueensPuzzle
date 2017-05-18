@@ -2,11 +2,12 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using BaseReuseServices;
+using EightQueensPuzzle.Helpers;
 using EightQueensPuzzle.Services;
 using Microsoft.Practices.Unity;
 using WpfUtilities;
 
-namespace EightQueensPuzzle
+namespace EightQueensPuzzle.Models
 {
     public class ChessboardField : INotifyPropertyChanged
     {

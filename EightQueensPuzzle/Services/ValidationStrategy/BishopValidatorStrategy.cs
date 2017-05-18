@@ -1,4 +1,5 @@
 ﻿using System;
+using EightQueensPuzzle.Models;
 
 namespace EightQueensPuzzle.Services.ValidationStrategy
 {
