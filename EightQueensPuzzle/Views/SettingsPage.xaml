@@ -4,22 +4,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-      xmlns:viewModels="clr-namespace:EightQueensPuzzle.ViewModels"
     xmlns:validationRules="clr-namespace:EightQueensPuzzle.ValidationRules"
-    xmlns:services="clr-namespace:EightQueensPuzzle.Services"
     xmlns:converters="clr-namespace:EightQueensPuzzle.Services.Converters"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:command="http://www.galasoft.ch/mvvmlight"
     x:Class="EightQueensPuzzle.Views.SettingsPage"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="800"
     MinWidth="500"
     MinHeight="450"
-      Title="SettingsPage">
+      Title="SettingsPage"
+    DataContext="{Binding SettingsViewModel, Source={StaticResource ViewModelLocatorService}}">
 
-    <Page.DataContext>
+    <!--<Page.DataContext>
         <viewModels:SettingsViewModel/>
-    </Page.DataContext>
+    </Page.DataContext>-->
     <Page.Resources>
         <converters:TimeMaxConverter x:Key="TimeMaxConverter"/>
         <converters:EnableTipsConverter x:Key="EnableTipsConverter"/>
@@ -133,6 +130,7 @@
                 <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="4" Grid.Column="0">Number of possible mistakes:</TextBlock>
                 <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="4" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left" Value="{Binding NumberOfPossibleMistakes}" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource NumberOfPossibleMistakesConverter}}"/>
             </Grid>
+            <Button HorizontalAlignment="Center" Width="150" Style="{DynamicResource SquareButtonStyle}" Margin="10" Command="{Binding SaveCommand}" Content="Save"></Button>
         </StackPanel>
     </Grid>
 </Page>

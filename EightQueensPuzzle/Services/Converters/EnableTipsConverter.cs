@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Constants;
 using EightQueensPuzzle.Models.GameTypes;
 
 namespace EightQueensPuzzle.Services.Converters
@@ -8,8 +8,8 @@ namespace EightQueensPuzzle.Services.Converters
     {
         public override IList<string> AvailableGameTypes { get; protected set; } = new List<string>()
         {
-            TryToMakeIt.GameTypeName,
-            WinAsSoonAsPossible.GameTypeName
+            GameTypeNames.TryToMakeIt,
+            GameTypeNames.WinAsSoonAsPossible
         };
     }
 }

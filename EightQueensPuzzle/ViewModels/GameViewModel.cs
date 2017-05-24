@@ -2,12 +2,11 @@
 using EightQueensPuzzle.Models.GameTypes;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Timer;
-using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Unity;
 
 namespace EightQueensPuzzle.ViewModels
 {
-    public class GameViewModel : BindableBase, IObserver
+    public class GameViewModel : ViewModelBase, IObserver
     {
         private string _gameTime = "90";
         private TimerServiceBase _timerServiceBase;
@@ -39,7 +38,7 @@ namespace EightQueensPuzzle.ViewModels
         private void InitTimer(ITimerServiceManager timerServiceManager) //it should be launch after button play will be clicked
         {
             if (timerServiceManager != null)
-                _timerServiceBase = timerServiceManager.GetTimer(new TryToMakeIt(10,20).Timer,100);
+                _timerServiceBase = timerServiceManager.GetTimer(TryToMakeIt.Timer,100);
             _timerServiceBase.InitTimer(this);
         }
     }

@@ -132,18 +132,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants\GameTypeNames.cs" />
     <Compile Include="Models\ChessboardField.cs" />
     <Compile Include="Enums\Pawn.cs" />
     <Compile Include="Enums\TimerType.cs" />
     <Compile Include="Helpers\FieldColorHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Models\Chessboard.cs" />
+    <Compile Include="Models\GameSettings.cs" />
     <Compile Include="Models\GameTypes\DoNotMakeMistakes.cs" />
-    <Compile Include="Models\GameTypes\GameSettingsBase.cs" />
     <Compile Include="Models\IChessboard.cs" />
-    <Compile Include="Models\IGameType.cs" />
+    <Compile Include="Models\GameType.cs" />
     <Compile Include="Models\GameTypes\TryToMakeIt.cs" />
     <Compile Include="Models\GameTypes\WinAsSoonAsPossible.cs" />
+    <Compile Include="Models\IGameType.cs" />
     <Compile Include="Services\CheesboardValidatorManager.cs" />
     <Compile Include="Services\Constraints\ConstraintBase.cs" />
     <Compile Include="Services\Constraints\ConstraintFactory.cs" />
@@ -160,11 +162,15 @@
     <Compile Include="Services\IChessboardValidatorManager.cs" />
     <Compile Include="Services\IChessboardValidatorStrategy.cs" />
     <Compile Include="Services\Converters\TimeMaxConverter.cs" />
+    <Compile Include="Services\GameTypeFactory.cs" />
+    <Compile Include="Services\IGameTypeFactory.cs" />
     <Compile Include="Services\IMapperService.cs" />
     <Compile Include="Services\IObserver.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\ISubject.cs" />
     <Compile Include="Services\ITipService.cs" />
     <Compile Include="Services\MapperService.cs" />
+    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\Timer\DecreaseTimer.cs" />
     <Compile Include="Services\Timer\IncreaseTimer.cs" />
     <Compile Include="Services\Timer\ITimerServiceManager.cs" />
@@ -178,6 +184,7 @@
     <Compile Include="Services\ValidationStrategy\QueenValidatorStrategy.cs" />
     <Compile Include="Services\ValidationStrategy\RookValidatorStrategy.cs" />
     <Compile Include="Services\TipService.cs" />
+    <Compile Include="Services\ViewModelLocatorService.cs" />
     <Compile Include="ValidationRules\NumericTextBoxValidationRule.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
@@ -185,6 +192,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>

@@ -1,8 +1,8 @@
 ﻿<Application x:Class="EightQueensPuzzle.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:EightQueensPuzzle"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:services="clr-namespace:EightQueensPuzzle.Services"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -24,6 +24,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            <services:ViewModelLocatorService x:Key="ViewModelLocatorService" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

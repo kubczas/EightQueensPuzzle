@@ -1,18 +1,13 @@
-﻿using EightQueensPuzzle.Enums;
+﻿using EightQueensPuzzle.Constants;
+using EightQueensPuzzle.Enums;
 
 namespace EightQueensPuzzle.Models.GameTypes
 {
-    public class WinAsSoonAsPossible : GameSettingsBase
+    public class WinAsSoonAsPossible : GameType
     {
-        public WinAsSoonAsPossible(int numberOfTips, int maxTime)
-        {
-            NumberOfTips = numberOfTips;
-            MaxTime = maxTime;
-        }
-
-        public const string GameTypeName = "Win as soon as possible";
-        public override TimerType Timer => TimerType.TimerIncrease;
-        public override int NumberOfTips { get; }
-        public int MaxTime { get; }
+        public const TimerType Timer = TimerType.TimerIncrease;
+        public int MaxTime { get; set; }
+        public int NumberOfTips { get; set; }
+        public override string GameTypeName => GameTypeNames.WinAsSoonAsPossible;
     }
 }

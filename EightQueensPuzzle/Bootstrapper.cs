@@ -1,5 +1,6 @@
 ﻿using BaseReuseServices;
 using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Models.GameTypes;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Constraints;
 using EightQueensPuzzle.Services.Timer;
@@ -18,12 +19,20 @@ namespace EightQueensPuzzle
             UnityService.Instance.Get().
                 RegisterType<MainWindow>(new ContainerControlledLifetimeManager()).
                 RegisterType<MenuPage>().
+                RegisterType<IGameType, TryToMakeIt>("TryToMakeIt").
+                RegisterType<IGameType, WinAsSoonAsPossible>("WinAsSoonAsPossible").
+                RegisterType<IGameType, DoNotMakeMistakes>("DoNotMakeMistakes").
+                RegisterType<IGameTypeFactory, GameTypeFactory>(new ContainerControlledLifetimeManager()).
+                RegisterType<IXmlFileSerializer, XmlFileSerializer>(new ContainerControlledLifetimeManager()).
+                RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager()).
                 RegisterType<SettingsViewModel>(new ContainerControlledLifetimeManager()).
                 RegisterType<IChessboard, Chessboard>(new ContainerControlledLifetimeManager()).
                 RegisterType<IConstraintFactory, ConstraintFactory>().
-                RegisterType<IChessboardValidatorManager, CheesboardValidatorManager>(new ContainerControlledLifetimeManager()).
+                RegisterType<IChessboardValidatorManager, CheesboardValidatorManager>(
+                    new ContainerControlledLifetimeManager()).
                 RegisterType<ITipService, TipService>(new ContainerControlledLifetimeManager()).
-                RegisterType<ITimerServiceManager, TimerServiceManager>();
+                RegisterType<ITimerServiceManager, TimerServiceManager>().
+                RegisterType<IXmlFileSerializer, XmlFileSerializer>();
         }
     }
 }

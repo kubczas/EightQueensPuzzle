@@ -1,10 +1,7 @@
-﻿using EightQueensPuzzle.Enums;
-
-namespace EightQueensPuzzle.Models
+﻿namespace EightQueensPuzzle.Models
 {
     public interface IGameType
     {
-        TimerType Timer { get; }
-        int NumberOfTips { get; }
+        string GameTypeName { get; }
     }
 }

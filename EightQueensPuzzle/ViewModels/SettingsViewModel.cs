@@ -1,27 +1,44 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using EightQueensPuzzle.Constants;
 using EightQueensPuzzle.Enums;
 using EightQueensPuzzle.Models;
 using EightQueensPuzzle.Models.GameTypes;
-using Microsoft.Practices.Prism.Mvvm;
+using EightQueensPuzzle.Services;
+using WpfUtilities;
 
 namespace EightQueensPuzzle.ViewModels
 {
-    internal class SettingsViewModel : BindableBase
+    public class SettingsViewModel : ViewModelBase
     {
+        private readonly ISettingsService _settingsService;
+        private readonly IGameTypeFactory _gameTypeFactory;
         private string _selectedGameType;
         private int _selectedPawn;
         private int _numberOfTips;
+        private int _timeMax;
         private int _numberOfPossibleMistakes;
         private bool _isTipsEnabled;
         private ObservableCollection<string> _gameTypes;
 
-        public SettingsViewModel()
+        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory)
         {
+            _settingsService = settingsService;
+            _gameTypeFactory = gameTypeFactory;
             _selectedGameType = GameTypes.FirstOrDefault();
+            SaveCommand = new DelegateCommand(SaveSettings);
+            LoadSettings();
         }
 
-        public Pawn SelectedPawn { get; set; }
+        public DelegateCommand SaveCommand { get; set; }
+
+        public ObservableCollection<string> GameTypes => _gameTypes ?? (_gameTypes = new ObservableCollection<string>()
+        {
+            GameTypeNames.DontMakeMistakes,
+            GameTypeNames.TryToMakeIt,
+            GameTypeNames.WinAsSoonAsPossible
+        });
 
         public string SelectedGameType
         {
@@ -33,18 +50,15 @@ namespace EightQueensPuzzle.ViewModels
             }
         }
 
-        public string SelectedGameDescription => $"Selected Pawn: {SelectedPawn} \nSelected game type: {SelectedGameType}";
-
-        public string DisplaySelectedGameDescription => string.Empty; //todo
-
-        public ObservableCollection<string> GameTypes => _gameTypes ?? (_gameTypes = new ObservableCollection<string>()
+        public int TimeMax
         {
-            DoNotMakeMistakes.GameTypeName,
-            TryToMakeIt.GameTypeName,
-            WinAsSoonAsPossible.GameTypeName
-        });
-
-        public int TimeMax { get; set; }
+            get { return _timeMax; }
+            set
+            {
+                _timeMax = value;
+                OnPropertyChanged(nameof(TimeMax));
+            }
+        }
 
         public int NumberOfTips
         {
@@ -84,6 +98,47 @@ namespace EightQueensPuzzle.ViewModels
                 _selectedPawn = value;
                 OnPropertyChanged(nameof(SelectedPawnIndex));
             }
+        }
+
+        private void LoadSettings()
+        {
+            try
+            {
+                GameSettings = _settingsService.Load();
+                SelectedPawnIndex = (int)(GameSettings.SelectedPawn - 1);
+                SelectedGameType = GameSettings.GameType.GameTypeName;
+
+                var tryToMakeIt = GameSettings.GameType as TryToMakeIt;
+                var winAsSoonAsPossible = GameSettings.GameType as WinAsSoonAsPossible;
+                var donotmistakes = GameSettings.GameType as DoNotMakeMistakes;
+
+                if (tryToMakeIt != null)
+                {
+                    TimeMax = tryToMakeIt.MaxTime;
+                    NumberOfTips = tryToMakeIt.NumberOfTips;
+                }
+                if (winAsSoonAsPossible != null)
+                {
+                    TimeMax = winAsSoonAsPossible.MaxTime;
+                    NumberOfTips = winAsSoonAsPossible.NumberOfTips;
+                }
+                if (donotmistakes != null)
+                {
+                    NumberOfPossibleMistakes = donotmistakes.MaxMistakes;
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                GameSettings = new GameSettings();
+            }
+        }
+
+        private void SaveSettings(object obj)
+        {
+            GameSettings.SelectedPawn = (Pawn)(_selectedPawn+1);
+            GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfTips, NumberOfPossibleMistakes,
+                IsTipsEnabled);
+            _settingsService.Save(GameSettings);
         }
     }
 }
