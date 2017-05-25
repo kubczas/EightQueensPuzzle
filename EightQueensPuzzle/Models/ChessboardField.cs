@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using BaseReuseServices;
+using EightQueensPuzzle.Helpers;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.ViewModels;
 using Microsoft.Practices.Unity;
@@ -11,6 +12,7 @@ namespace EightQueensPuzzle.Models
 {
     public class ChessboardField : INotifyPropertyChanged
     {
+        public static bool IsReadonly = true;
         private readonly ITipService _tipService;
         private readonly object _thisLock;
         private static readonly SolidColorBrush DefaultFieldColor = new SolidColorBrush(Color.FromRgb(100, 181, 246));
@@ -52,9 +54,11 @@ namespace EightQueensPuzzle.Models
 
         private void ManagePawn(object obj)
         {
+            if(IsReadonly)
+                return;
             lock (_thisLock)
             {
-                if (!IsPawnSet)
+                if (!IsPawnSet && !Equals(CurrentFieldColor, FieldColorHelper.BadFieldColor))
                 {
                     var queen = new ImageBrush {ImageSource = ViewModelBase.GameSettings.SelectedPawn.Image};
                     CurrentFieldColor = queen;
@@ -70,6 +74,8 @@ namespace EightQueensPuzzle.Models
 
         private void ChangeColor(object obj)
         {
+            if (IsReadonly)
+                return;
             lock (_thisLock)
             {
                 if (CurrentFieldColor is SolidColorBrush)
@@ -79,6 +85,8 @@ namespace EightQueensPuzzle.Models
 
         private void SetDefaultFieldColor(object obj)
         {
+            if (IsReadonly)
+                return;
             lock (_thisLock)
             {
                 if (!IsPawnSet)

@@ -13,7 +13,7 @@
     MinHeight="450"
       Title="SettingsPage"
     xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-dialog:DialogParticipation.Register="{Binding}"
+    dialog:DialogParticipation.Register="{Binding}"
     DataContext="{Binding SettingsViewModel, Source={StaticResource ViewModelLocatorService}}">
     <Page.Resources>
         <converters:TimeMaxConverter x:Key="TimeMaxConverter"/>
@@ -64,7 +64,7 @@ dialog:DialogParticipation.Register="{Binding}"
                         <Grid Background="#64B5F6">
                             <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_rook}" /> 
+                                    <VisualBrush Visual="{StaticResource appbar_chess_rook}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>

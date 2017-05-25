@@ -29,6 +29,7 @@ namespace EightQueensPuzzle
                 RegisterType<IXmlFileSerializer, XmlFileSerializer>(new ContainerControlledLifetimeManager()).
                 RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager()).
                 RegisterType<SettingsViewModel>(new ContainerControlledLifetimeManager()).
+                RegisterType<GameViewModel>(new ContainerControlledLifetimeManager()).
                 RegisterType<IChessboard, Chessboard>(new ContainerControlledLifetimeManager()).
                 RegisterType<IConstraintFactory, ConstraintFactory>().
                 RegisterType<IChessboardValidatorManager, CheesboardValidatorManager>(

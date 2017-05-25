@@ -7,5 +7,7 @@ namespace EightQueensPuzzle.Services
     public class ViewModelLocatorService
     {
         public SettingsViewModel SettingsViewModel => UnityService.Instance.Get().Resolve<SettingsViewModel>();
+
+        public GameViewModel GameViewModel => UnityService.Instance.Get().Resolve<GameViewModel>();
     }
 }

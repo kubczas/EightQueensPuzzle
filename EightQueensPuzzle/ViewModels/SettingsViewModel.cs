@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using EightQueensPuzzle.Constants;
 using EightQueensPuzzle.Models;
-using EightQueensPuzzle.Models.GameTypes;
 using EightQueensPuzzle.Services;
 using MahApps.Metro.Controls.Dialogs;
 using WpfUtilities;
@@ -24,7 +23,7 @@ namespace EightQueensPuzzle.ViewModels
         private bool _isTipsEnabled;
         private ObservableCollection<string> _gameTypes;
 
-        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory, IChessPawnFactory chessPawnFactory, IDialogCoordinator dialogCoordinator)
+        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory, IChessPawnFactory chessPawnFactory, IDialogCoordinator dialogCoordinator) : base(settingsService)
         {
             _settingsService = settingsService;
             _gameTypeFactory = gameTypeFactory;
@@ -104,19 +103,9 @@ namespace EightQueensPuzzle.ViewModels
             }
         }
 
-        public object GoBackCommand { get; set; }
-
         private void LoadSettings()
         {
-            try
-            {
-                GameSettings = _settingsService.Load();
-                SetGameTypeSettings();
-            }
-            catch (FileNotFoundException)
-            {
-                GameSettings = new GameSettings();
-            }
+            SetGameTypeSettings();
         }
 
         private async void SaveSettings(object obj)
@@ -124,7 +113,7 @@ namespace EightQueensPuzzle.ViewModels
             ProgressDialogController controller = await _dialogCoordinator.ShowProgressAsync(this, "Saving", "Saving");
             controller.SetIndeterminate();
 
-            GameSettings.SelectedPawn = _chessPawnFactory.CreatePawn(_selectedPawn+1);
+            GameSettings.SelectedPawn = _chessPawnFactory.CreatePawn(_selectedPawn + 1);
             GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfTips, NumberOfPossibleMistakes,
                 IsTipsEnabled);
             _settingsService.Save(GameSettings);
@@ -137,23 +126,19 @@ namespace EightQueensPuzzle.ViewModels
             SelectedPawnIndex = GameSettings.SelectedPawn.Order - 1;
             SelectedGameType = GameSettings.GameType.GameTypeName;
 
-            var tryToMakeIt = GameSettings.GameType as TryToMakeIt;
-            var winAsSoonAsPossible = GameSettings.GameType as WinAsSoonAsPossible;
-            var donotmistakes = GameSettings.GameType as DoNotMakeMistakes;
-
-            if (tryToMakeIt != null)
+            if (TryToMakeIt != null)
             {
-                TimeMax = tryToMakeIt.MaxTime;
-                NumberOfTips = tryToMakeIt.NumberOfTips;
+                TimeMax = TryToMakeIt.MaxTime;
+                NumberOfTips = TryToMakeIt.NumberOfTips;
             }
-            if (winAsSoonAsPossible != null)
+            if (WinAsSoonAsPossible != null)
             {
-                TimeMax = winAsSoonAsPossible.MaxTime;
-                NumberOfTips = winAsSoonAsPossible.NumberOfTips;
+                TimeMax = WinAsSoonAsPossible.MaxTime;
+                NumberOfTips = WinAsSoonAsPossible.NumberOfTips;
             }
-            if (donotmistakes != null)
+            if (DoNotMakeMistakes != null)
             {
-                NumberOfPossibleMistakes = donotmistakes.MaxMistakes;
+                NumberOfPossibleMistakes = DoNotMakeMistakes.MaxMistakes;
             }
         }
     }
