@@ -3,6 +3,7 @@ using EightQueensPuzzle.Models.GameTypes;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Timer;
 using Microsoft.Practices.Unity;
+using WpfUtilities;
 
 namespace EightQueensPuzzle.ViewModels
 {
@@ -12,6 +13,11 @@ namespace EightQueensPuzzle.ViewModels
         private TimerServiceBase _timerServiceBase;
 
         public GameViewModel()
+        {
+            PlayGameCommand = new RelayCommand(PlayGame);
+        }
+
+        private void PlayGame(object obj)
         {
             ITimerServiceManager timerServiceManager = UnityService.Instance.Get().Resolve<ITimerServiceManager>();
             InitTimer(timerServiceManager);
@@ -30,6 +36,8 @@ namespace EightQueensPuzzle.ViewModels
             }
         }
 
+        public RelayCommand PlayGameCommand { get; set; }
+
         public void Update()
         {
             Timer = _timerServiceBase.TimerValue;
@@ -38,7 +46,7 @@ namespace EightQueensPuzzle.ViewModels
         private void InitTimer(ITimerServiceManager timerServiceManager) //it should be launch after button play will be clicked
         {
             if (timerServiceManager != null)
-                _timerServiceBase = timerServiceManager.GetTimer(TryToMakeIt.Timer,100);
+                _timerServiceBase = timerServiceManager.GetTimer(ViewModelBase.GameSettings.GameType.Timer,100);
             _timerServiceBase.InitTimer(this);
         }
     }

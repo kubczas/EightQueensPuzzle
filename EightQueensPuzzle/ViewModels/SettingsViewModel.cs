@@ -105,27 +105,7 @@ namespace EightQueensPuzzle.ViewModels
             try
             {
                 GameSettings = _settingsService.Load();
-                SelectedPawnIndex = (int)(GameSettings.SelectedPawn - 1);
-                SelectedGameType = GameSettings.GameType.GameTypeName;
-
-                var tryToMakeIt = GameSettings.GameType as TryToMakeIt;
-                var winAsSoonAsPossible = GameSettings.GameType as WinAsSoonAsPossible;
-                var donotmistakes = GameSettings.GameType as DoNotMakeMistakes;
-
-                if (tryToMakeIt != null)
-                {
-                    TimeMax = tryToMakeIt.MaxTime;
-                    NumberOfTips = tryToMakeIt.NumberOfTips;
-                }
-                if (winAsSoonAsPossible != null)
-                {
-                    TimeMax = winAsSoonAsPossible.MaxTime;
-                    NumberOfTips = winAsSoonAsPossible.NumberOfTips;
-                }
-                if (donotmistakes != null)
-                {
-                    NumberOfPossibleMistakes = donotmistakes.MaxMistakes;
-                }
+                SetGameTypeSettings();
             }
             catch (FileNotFoundException)
             {
@@ -139,6 +119,31 @@ namespace EightQueensPuzzle.ViewModels
             GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfTips, NumberOfPossibleMistakes,
                 IsTipsEnabled);
             _settingsService.Save(GameSettings);
+        }
+
+        private void SetGameTypeSettings()
+        {
+            SelectedPawnIndex = (int) (GameSettings.SelectedPawn - 1);
+            SelectedGameType = GameSettings.GameType.GameTypeName;
+
+            var tryToMakeIt = GameSettings.GameType as TryToMakeIt;
+            var winAsSoonAsPossible = GameSettings.GameType as WinAsSoonAsPossible;
+            var donotmistakes = GameSettings.GameType as DoNotMakeMistakes;
+
+            if (tryToMakeIt != null)
+            {
+                TimeMax = tryToMakeIt.MaxTime;
+                NumberOfTips = tryToMakeIt.NumberOfTips;
+            }
+            if (winAsSoonAsPossible != null)
+            {
+                TimeMax = winAsSoonAsPossible.MaxTime;
+                NumberOfTips = winAsSoonAsPossible.NumberOfTips;
+            }
+            if (donotmistakes != null)
+            {
+                NumberOfPossibleMistakes = donotmistakes.MaxMistakes;
+            }
         }
     }
 }

@@ -146,6 +146,13 @@
     <Compile Include="Models\GameTypes\TryToMakeIt.cs" />
     <Compile Include="Models\GameTypes\WinAsSoonAsPossible.cs" />
     <Compile Include="Models\IGameType.cs" />
+    <Compile Include="Models\Pawns\Bishop.cs" />
+    <Compile Include="Models\Pawns\King.cs" />
+    <Compile Include="Models\Pawns\Knight.cs" />
+    <Compile Include="Models\Pawns\Pawn.cs" />
+    <Compile Include="Models\Pawns\PawnBase.cs" />
+    <Compile Include="Models\Pawns\Queen.cs" />
+    <Compile Include="Models\Pawns\Rook.cs" />
     <Compile Include="Services\CheesboardValidatorManager.cs" />
     <Compile Include="Services\Constraints\ConstraintBase.cs" />
     <Compile Include="Services\Constraints\ConstraintFactory.cs" />
@@ -295,9 +302,6 @@
       <Project>{D6A5483C-BCCE-4CF9-A716-66EBFE4CE77F}</Project>
       <Name>WpfUtilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\White_Queen_Finish.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />

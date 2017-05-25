@@ -1,6 +1,6 @@
 using System.Windows.Media;
 
-namespace EightQueensPuzzle
+namespace EightQueensPuzzle.Helpers
 {
     public static class FieldColorHelper
     {

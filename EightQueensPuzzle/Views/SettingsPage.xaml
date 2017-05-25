@@ -13,15 +13,10 @@
     MinHeight="450"
       Title="SettingsPage"
     DataContext="{Binding SettingsViewModel, Source={StaticResource ViewModelLocatorService}}">
-
-    <!--<Page.DataContext>
-        <viewModels:SettingsViewModel/>
-    </Page.DataContext>-->
     <Page.Resources>
         <converters:TimeMaxConverter x:Key="TimeMaxConverter"/>
         <converters:EnableTipsConverter x:Key="EnableTipsConverter"/>
         <converters:NumberOfPossibleMistakesConverter x:Key="NumberOfPossibleMistakesConverter"/>
-        <converters:NumberOfTipsConverter x:Key="NumberOfTipsConverter"/>
     </Page.Resources>
     <Grid>
         <StackPanel>
@@ -40,6 +35,7 @@
                 <controls:FlipView Height="300" Width="800"
                    IsBannerEnabled="True" 
                    SelectedIndex="{Binding SelectedPawnIndex}"
+                   SelectionChanged="FlipView_SelectionChanged"
                    Margin="0, 0, 10, 0">
                     <controls:FlipView.Items>
                         <Grid Background="#64B5F6">
@@ -59,14 +55,14 @@
                         <Grid Background="#64B5F6">
                             <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_rook}" />
+                                    <VisualBrush Visual="{StaticResource appbar_chess_bishop}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>
                         <Grid Background="#64B5F6">
                             <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_bishop}" />
+                                    <VisualBrush Visual="{StaticResource appbar_chess_rook}" /> 
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using EightQueensPuzzle.Helpers;
 using EightQueensPuzzle.Models;
 using EightQueensPuzzle.ViewModels;
 

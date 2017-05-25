@@ -56,7 +56,7 @@ namespace EightQueensPuzzle.Models
             {
                 if (!IsPawnSet)
                 {
-                    var queen = new ImageBrush {ImageSource = ImageHelper.QueenPawn};
+                    var queen = new ImageBrush {ImageSource = ImageHelper.GetPawnImage()};
                     CurrentFieldColor = queen;
                     IsPawnSet = true;
                 }

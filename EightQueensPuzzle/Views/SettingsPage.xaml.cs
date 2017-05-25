@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using EightQueensPuzzle.Services;
+using EightQueensPuzzle.Enums;
 using MahApps.Metro.Controls;
 
 namespace EightQueensPuzzle.Views
@@ -19,6 +18,13 @@ namespace EightQueensPuzzle.Views
         private void Back(object sender, RoutedEventArgs e)
         {
             NavigationService?.GoBack();
+        }
+
+        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var flipview = ((FlipView)sender);
+            var pawnEnum = (Pawn) flipview.SelectedIndex+1;
+            flipview.BannerText = pawnEnum.ToString();
         }
     }
 }
