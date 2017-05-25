@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EightQueensPuzzle.Models;
+﻿using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Services.Constraints;
 
 namespace EightQueensPuzzle.Services.ValidationStrategy
 {
     public abstract class ChessPawnValidatorStrategyBase : IChessboardValidatorStrategy
     {
+        protected readonly IConstraintFactory ConstraintFactory;
+
+        protected ChessPawnValidatorStrategyBase(IConstraintFactory constraintFactory)
+        {
+            ConstraintFactory = constraintFactory;
+        }
+
         public abstract bool Validate(ChessboardField chessboardField);
 
         public abstract string Error { get; }

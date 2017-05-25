@@ -6,18 +6,15 @@ namespace EightQueensPuzzle.Services.ValidationStrategy
 {
     public class QueenValidatorStrategy : ChessPawnValidatorStrategyBase
     {
-        private readonly IConstraintFactory _constraintFactory;
-
-        public QueenValidatorStrategy(IConstraintFactory constraintFactory)
+        public QueenValidatorStrategy(IConstraintFactory constraintFactory) : base(constraintFactory)
         {
-            _constraintFactory = constraintFactory;
         }
 
         public override bool Validate(ChessboardField destinationChessboardField)
         {
-            return _constraintFactory.GetDiagonalConstraint().IsConstraintMet(destinationChessboardField) &&
-                   _constraintFactory.GetHorizontalConstraint().IsConstraintMet(destinationChessboardField) &&
-                   _constraintFactory.GetVerticalConstraint().IsConstraintMet(destinationChessboardField);
+            return ConstraintFactory.GetDiagonalConstraint().IsConstraintMet(destinationChessboardField) &&
+                   ConstraintFactory.GetHorizontalConstraint().IsConstraintMet(destinationChessboardField) &&
+                   ConstraintFactory.GetVerticalConstraint().IsConstraintMet(destinationChessboardField);
         }
 
         public override string Error { get; }

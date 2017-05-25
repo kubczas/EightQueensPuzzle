@@ -1,13 +1,18 @@
 ﻿using System;
 using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Services.Constraints;
 
 namespace EightQueensPuzzle.Services.ValidationStrategy
 {
     public class BishopValidatorStrategy : ChessPawnValidatorStrategyBase
     {
-        public override bool Validate(ChessboardField chessboardField)
+        public BishopValidatorStrategy(IConstraintFactory constraintFactory) : base(constraintFactory)
         {
-            throw new NotImplementedException();
+        }
+
+        public override bool Validate(ChessboardField destinationChessboardField)
+        {
+            return ConstraintFactory.GetDiagonalConstraint().IsConstraintMet(destinationChessboardField);
         }
 
         public override string Error { get; }

@@ -20,10 +20,10 @@ namespace EightQueensPuzzle.Services.Constraints
                 Where(predicate).
                 All(chessboardField => !chessboardField.IsPawnSet);
         }
-        protected bool AreValuesInChessboardSizeScope(int column, int row, int? scope = null)
+        protected bool AreValuesInChessboardSizeScope(int column, int row, int? scope = null, int? startColumn = null, int? startRow = null)
         {
-            if (scope.HasValue)
-                return column.IsWithin(column, scope.Value) && row.IsWithin(row, scope.Value);
+            if (scope.HasValue && startColumn.HasValue && startRow.HasValue)
+                return column.IsWithin(startColumn.Value, scope.Value) && row.IsWithin(startRow.Value, scope.Value);
             return column.IsBetween(0, Chessboard.ChessboardSize - 1) && row.IsBetween(0, Chessboard.ChessboardSize - 1);
         }
 

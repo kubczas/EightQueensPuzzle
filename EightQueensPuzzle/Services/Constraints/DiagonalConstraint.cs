@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using EightQueensPuzzle.Models;
-using Extenstions;
 
 namespace EightQueensPuzzle.Services.Constraints
 {
@@ -62,7 +61,9 @@ namespace EightQueensPuzzle.Services.Constraints
 
         private bool ValidateDiagonal(int row, int column, int? scope = null)
         {
-            while (AreValuesInChessboardSizeScope(column, row, scope))
+            int startRow = row;
+            int startColumn = column;
+            while (AreValuesInChessboardSizeScope(column, row, scope, startColumn, startRow))
             {
                 var currentField = Chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == column);
                 if (currentField != null && currentField.IsPawnSet)

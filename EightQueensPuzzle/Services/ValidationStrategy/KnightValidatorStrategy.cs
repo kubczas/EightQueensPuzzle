@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EightQueensPuzzle.Models;
+﻿using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Services.Constraints;
 
 namespace EightQueensPuzzle.Services.ValidationStrategy
 {
     public class KnightValidatorStrategy : ChessPawnValidatorStrategyBase
     {
-        public override bool Validate(ChessboardField chessboardField)
+        public KnightValidatorStrategy(IConstraintFactory constraintFactory) : base(constraintFactory)
         {
-            throw new NotImplementedException();
+        }
+
+        public override bool Validate(ChessboardField destinationChessboardField)
+        {
+            return ConstraintFactory.GetKnightConstraint().IsConstraintMet(destinationChessboardField);
         }
 
         public override string Error { get; }

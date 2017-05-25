@@ -14,7 +14,7 @@ namespace EightQueensPuzzle.Services.Constraints
 
         public override bool IsConstraintMet(ChessboardField destinationChessboardField, int scope)
         {
-            return ExecuteConstraintPredicate(field => field.Row.IsWithin(destinationChessboardField.Row, scope));
+            return ExecuteConstraintPredicate(field => field.Column==destinationChessboardField.Column && field.Row.IsWithin(destinationChessboardField.Row, scope));
         }
     }
 }

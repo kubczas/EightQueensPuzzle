@@ -29,12 +29,12 @@ namespace EightQueensPuzzle.Services
         private static IDictionary<Pawn, IChessboardValidatorStrategy> InitStrategy()
         {
             return new Dictionary<Pawn, IChessboardValidatorStrategy>(){
-                {Pawn.Pawn, new PawnValidatorStrategy()},
-                {Pawn.Bishop, new BishopValidatorStrategy()},
-                {Pawn.King, new KingValidatorStrategy()},
-                {Pawn.Knight, new KnightValidatorStrategy()},
+                {Pawn.Pawn, new PawnValidatorStrategy(_constraintFactory)},
+                {Pawn.Bishop, new BishopValidatorStrategy(_constraintFactory)},
+                {Pawn.King, new KingValidatorStrategy(_constraintFactory)},
+                {Pawn.Knight, new KnightValidatorStrategy(_constraintFactory)},
                 {Pawn.Queen, new QueenValidatorStrategy(_constraintFactory)},
-                {Pawn.Rook, new RookValidatorStrategy()}
+                {Pawn.Rook, new RookValidatorStrategy(_constraintFactory)}
             };
         }
     }

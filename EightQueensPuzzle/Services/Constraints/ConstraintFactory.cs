@@ -24,5 +24,10 @@ namespace EightQueensPuzzle.Services.Constraints
         {
             return new VerticalConstraint(_chessboard);
         }
+
+        public IConstraint GetKnightConstraint()
+        {
+            return new KnightConstraint(_chessboard);
+        }
     }
 }

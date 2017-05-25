@@ -64,7 +64,7 @@ namespace EightQueensPuzzle.Services.Constraints
 
         private bool ValidKnightPosition(int column, int row)
         {
-            if (!AreValuesInChessboardSizeScope(column, row)) return false;
+            if (!AreValuesInChessboardSizeScope(column, row)) return true;
 
             var knightDestination = Chessboard.ChessboardFields.FirstOrDefault(field => field.Row == row && field.Column == column);
             return knightDestination != null && !knightDestination.IsPawnSet;

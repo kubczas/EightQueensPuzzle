@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using EightQueensPuzzle.Models;
+﻿using EightQueensPuzzle.Models;
 using Extenstions;
 
 namespace EightQueensPuzzle.Services.Constraints
@@ -16,7 +14,7 @@ namespace EightQueensPuzzle.Services.Constraints
 
         public override bool IsConstraintMet(ChessboardField destinationChessboardField, int scope)
         {
-            return ExecuteConstraintPredicate(field => field.Column.IsWithin(destinationChessboardField.Column, scope));
+            return ExecuteConstraintPredicate(field => field.Row == destinationChessboardField.Row && field.Column.IsWithin(destinationChessboardField.Column, scope));
         }
     }
 }

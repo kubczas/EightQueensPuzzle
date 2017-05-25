@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EightQueensPuzzle.Models;
+﻿using EightQueensPuzzle.Models;
 
 namespace EightQueensPuzzle.Services.Constraints
 {
