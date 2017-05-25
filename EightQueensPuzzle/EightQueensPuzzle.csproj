@@ -154,6 +154,7 @@
     <Compile Include="Models\Pawns\Queen.cs" />
     <Compile Include="Models\Pawns\Rook.cs" />
     <Compile Include="Services\CheesboardValidatorManager.cs" />
+    <Compile Include="Services\ChessPawnFactory.cs" />
     <Compile Include="Services\Constraints\ConstraintBase.cs" />
     <Compile Include="Services\Constraints\ConstraintFactory.cs" />
     <Compile Include="Services\Constraints\DiagonalConstraint.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Services\IChessboardValidatorStrategy.cs" />
     <Compile Include="Services\Converters\TimeMaxConverter.cs" />
     <Compile Include="Services\GameTypeFactory.cs" />
+    <Compile Include="Services\IChessPawnFactory.cs" />
     <Compile Include="Services\IGameTypeFactory.cs" />
     <Compile Include="Services\IMapperService.cs" />
     <Compile Include="Services\IObserver.cs" />

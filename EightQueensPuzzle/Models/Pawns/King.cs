@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace EightQueensPuzzle.Models.Pawns
 {
-    class King
+    public class King : PawnBase
     {
+        public override BitmapImage Image => new BitmapImage(new Uri(@"C:\Users\Kubczas\documents\visual studio 2015\Projects\EightQueensPuzzle\EightQueensPuzzle\Resources\king.png", UriKind.Relative));
+        public override int NumberOfPawns => 16;
+        public override int Order => 6;
     }
 }

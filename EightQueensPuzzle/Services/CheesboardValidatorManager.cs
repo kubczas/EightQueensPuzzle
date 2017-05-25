@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using EightQueensPuzzle.Enums;
+﻿using System;
+using System.Collections.Generic;
+using EightQueensPuzzle.Models.Pawns;
 using EightQueensPuzzle.Services.Constraints;
 using EightQueensPuzzle.Services.ValidationStrategy;
 
@@ -8,33 +9,33 @@ namespace EightQueensPuzzle.Services
     public class CheesboardValidatorManager : IChessboardValidatorManager
     {
         private static IConstraintFactory _constraintFactory;
-        private static IDictionary<Pawn, IChessboardValidatorStrategy> _chessboardValidatorStrategies;
+        private static IDictionary<Type, IChessboardValidatorStrategy> _chessboardValidatorStrategies;
 
         public CheesboardValidatorManager(IConstraintFactory constraintFactory)
         {
             _constraintFactory = constraintFactory;
         }
 
-        public static IDictionary<Pawn, IChessboardValidatorStrategy> ChessboardValidatorStrategies
+        public static IDictionary<Type, IChessboardValidatorStrategy> ChessboardValidatorStrategies
             => _chessboardValidatorStrategies ??
                (_chessboardValidatorStrategies = InitStrategy());
 
-        public IChessboardValidatorStrategy GetChessboardValidatorStrategy(Pawn pawnType)
+        public IChessboardValidatorStrategy GetChessboardValidatorStrategy(Type pawnType)
         {
             IChessboardValidatorStrategy result;
             ChessboardValidatorStrategies.TryGetValue(pawnType, out result);
             return result;
         }
 
-        private static IDictionary<Pawn, IChessboardValidatorStrategy> InitStrategy()
+        private static IDictionary<Type, IChessboardValidatorStrategy> InitStrategy()
         {
-            return new Dictionary<Pawn, IChessboardValidatorStrategy>(){
-                {Pawn.Pawn, new PawnValidatorStrategy(_constraintFactory)},
-                {Pawn.Bishop, new BishopValidatorStrategy(_constraintFactory)},
-                {Pawn.King, new KingValidatorStrategy(_constraintFactory)},
-                {Pawn.Knight, new KnightValidatorStrategy(_constraintFactory)},
-                {Pawn.Queen, new QueenValidatorStrategy(_constraintFactory)},
-                {Pawn.Rook, new RookValidatorStrategy(_constraintFactory)}
+            return new Dictionary<Type, IChessboardValidatorStrategy>(){
+                {typeof(Pawn), new PawnValidatorStrategy(_constraintFactory)},
+                {typeof(Bishop), new BishopValidatorStrategy(_constraintFactory)},
+                {typeof(King), new KingValidatorStrategy(_constraintFactory)},
+                {typeof(Knight), new KnightValidatorStrategy(_constraintFactory)},
+                {typeof(Queen), new QueenValidatorStrategy(_constraintFactory)},
+                {typeof(Rook), new RookValidatorStrategy(_constraintFactory)}
             };
         }
     }

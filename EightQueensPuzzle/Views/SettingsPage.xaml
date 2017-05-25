@@ -12,6 +12,8 @@
     MinWidth="500"
     MinHeight="450"
       Title="SettingsPage"
+    xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+dialog:DialogParticipation.Register="{Binding}"
     DataContext="{Binding SettingsViewModel, Source={StaticResource ViewModelLocatorService}}">
     <Page.Resources>
         <converters:TimeMaxConverter x:Key="TimeMaxConverter"/>

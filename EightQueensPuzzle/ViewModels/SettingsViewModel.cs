@@ -2,10 +2,10 @@
 using System.IO;
 using System.Linq;
 using EightQueensPuzzle.Constants;
-using EightQueensPuzzle.Enums;
 using EightQueensPuzzle.Models;
 using EightQueensPuzzle.Models.GameTypes;
 using EightQueensPuzzle.Services;
+using MahApps.Metro.Controls.Dialogs;
 using WpfUtilities;
 
 namespace EightQueensPuzzle.ViewModels
@@ -14,6 +14,8 @@ namespace EightQueensPuzzle.ViewModels
     {
         private readonly ISettingsService _settingsService;
         private readonly IGameTypeFactory _gameTypeFactory;
+        private readonly IChessPawnFactory _chessPawnFactory;
+        private readonly IDialogCoordinator _dialogCoordinator;
         private string _selectedGameType;
         private int _selectedPawn;
         private int _numberOfTips;
@@ -22,10 +24,12 @@ namespace EightQueensPuzzle.ViewModels
         private bool _isTipsEnabled;
         private ObservableCollection<string> _gameTypes;
 
-        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory)
+        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory, IChessPawnFactory chessPawnFactory, IDialogCoordinator dialogCoordinator)
         {
             _settingsService = settingsService;
             _gameTypeFactory = gameTypeFactory;
+            _chessPawnFactory = chessPawnFactory;
+            _dialogCoordinator = dialogCoordinator;
             _selectedGameType = GameTypes.FirstOrDefault();
             SaveCommand = new DelegateCommand(SaveSettings);
             LoadSettings();
@@ -100,6 +104,8 @@ namespace EightQueensPuzzle.ViewModels
             }
         }
 
+        public object GoBackCommand { get; set; }
+
         private void LoadSettings()
         {
             try
@@ -113,17 +119,22 @@ namespace EightQueensPuzzle.ViewModels
             }
         }
 
-        private void SaveSettings(object obj)
+        private async void SaveSettings(object obj)
         {
-            GameSettings.SelectedPawn = (Pawn)(_selectedPawn+1);
+            ProgressDialogController controller = await _dialogCoordinator.ShowProgressAsync(this, "Saving", "Saving");
+            controller.SetIndeterminate();
+
+            GameSettings.SelectedPawn = _chessPawnFactory.CreatePawn(_selectedPawn+1);
             GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfTips, NumberOfPossibleMistakes,
                 IsTipsEnabled);
             _settingsService.Save(GameSettings);
+
+            await controller.CloseAsync();
         }
 
         private void SetGameTypeSettings()
         {
-            SelectedPawnIndex = (int) (GameSettings.SelectedPawn - 1);
+            SelectedPawnIndex = GameSettings.SelectedPawn.Order - 1;
             SelectedGameType = GameSettings.GameType.GameTypeName;
 
             var tryToMakeIt = GameSettings.GameType as TryToMakeIt;

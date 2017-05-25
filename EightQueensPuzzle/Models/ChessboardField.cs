@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using BaseReuseServices;
-using EightQueensPuzzle.Helpers;
 using EightQueensPuzzle.Services;
+using EightQueensPuzzle.ViewModels;
 using Microsoft.Practices.Unity;
 using WpfUtilities;
 
@@ -56,7 +56,7 @@ namespace EightQueensPuzzle.Models
             {
                 if (!IsPawnSet)
                 {
-                    var queen = new ImageBrush {ImageSource = ImageHelper.GetPawnImage()};
+                    var queen = new ImageBrush {ImageSource = ViewModelBase.GameSettings.SelectedPawn.Image};
                     CurrentFieldColor = queen;
                     IsPawnSet = true;
                 }

@@ -6,6 +6,7 @@ using EightQueensPuzzle.Services.Constraints;
 using EightQueensPuzzle.Services.Timer;
 using EightQueensPuzzle.ViewModels;
 using EightQueensPuzzle.Views;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.Unity;
 
 namespace EightQueensPuzzle
@@ -22,6 +23,8 @@ namespace EightQueensPuzzle
                 RegisterType<IGameType, TryToMakeIt>("TryToMakeIt").
                 RegisterType<IGameType, WinAsSoonAsPossible>("WinAsSoonAsPossible").
                 RegisterType<IGameType, DoNotMakeMistakes>("DoNotMakeMistakes").
+                RegisterType<IChessPawnFactory, ChessPawnFactory>().
+                RegisterType<IDialogCoordinator, DialogCoordinator>().
                 RegisterType<IGameTypeFactory, GameTypeFactory>(new ContainerControlledLifetimeManager()).
                 RegisterType<IXmlFileSerializer, XmlFileSerializer>(new ContainerControlledLifetimeManager()).
                 RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager()).
