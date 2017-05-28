@@ -64,6 +64,10 @@ namespace EightQueensPuzzle.Models
                     CurrentFieldColor = queen;
                     IsPawnSet = true;
                 }
+                else if (Equals(CurrentFieldColor, FieldColorHelper.BadFieldColor))
+                {
+                    //ignore todo
+                }
                 else
                 {
                     IsPawnSet = false;
