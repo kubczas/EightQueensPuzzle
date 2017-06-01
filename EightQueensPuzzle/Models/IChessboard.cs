@@ -7,7 +7,6 @@ namespace EightQueensPuzzle.Models
         ObservableCollection<ChessboardField> ChessboardFields { get; }
 
         int ChessboardSize { get; }
-
         void InitChessboard();
     }
 }

@@ -14,6 +14,8 @@ namespace EightQueensPuzzle.Models
     {
         public static bool IsReadonly = true;
         private readonly ITipService _tipService;
+        private readonly IGameViewModel _gameViewModel;
+        private readonly IChessboardValidatorStrategy _validatorStrategy;
         private readonly object _thisLock;
         private static readonly SolidColorBrush DefaultFieldColor = new SolidColorBrush(Color.FromRgb(100, 181, 246));
         private Brush _currentFieldColor;
@@ -23,6 +25,8 @@ namespace EightQueensPuzzle.Models
             Row = row;
             Column = column;
             _tipService = UnityService.Instance.Get().Resolve<ITipService>();
+            _gameViewModel = UnityService.Instance.Get().Resolve<IGameViewModel>();
+            _validatorStrategy = UnityService.Instance.Get().Resolve<IChessboardValidatorManager>().GetChessboardValidatorStrategy(_gameViewModel.SelectedPawn.GetType());
             _thisLock = new object();
             ChangeRectangleColorCommand = new RelayCommand(ChangeColor);
             SetDefaultRectangleColorCommand = new RelayCommand(SetDefaultFieldColor);
@@ -58,22 +62,30 @@ namespace EightQueensPuzzle.Models
                 return;
             lock (_thisLock)
             {
-                if (!IsPawnSet && !Equals(CurrentFieldColor, FieldColorHelper.BadFieldColor))
+                if (!IsPawnSet && _validatorStrategy.Validate(this))
                 {
-                    var queen = new ImageBrush {ImageSource = ViewModelBase.GameSettings.SelectedPawn.Image};
-                    CurrentFieldColor = queen;
-                    IsPawnSet = true;
+                    SetPawnOnField();
+                    _gameViewModel.NumberOfLeftPawns = _gameViewModel.NumberOfLeftPawns - 1;
                 }
-                else if (Equals(CurrentFieldColor, FieldColorHelper.BadFieldColor))
+                else if(Equals(CurrentFieldColor, FieldColorHelper.GoodFieldColor))
                 {
-                    //ignore todo
-                }
-                else
-                {
-                    IsPawnSet = false;
-                    CurrentFieldColor = DefaultFieldColor;
+                    _gameViewModel.NumberOfLeftPawns = _gameViewModel.NumberOfLeftPawns + 1;
+                    ClearField();
                 }
             }
+        }
+
+        private void ClearField()
+        {
+            IsPawnSet = false;
+            CurrentFieldColor = DefaultFieldColor;
+        }
+
+        private void SetPawnOnField()
+        {
+            var queen = new ImageBrush {ImageSource = ViewModelBase.GameSettings.SelectedPawn.Image};
+            CurrentFieldColor = queen;
+            IsPawnSet = true;
         }
 
         private void ChangeColor(object obj)
@@ -82,7 +94,7 @@ namespace EightQueensPuzzle.Models
                 return;
             lock (_thisLock)
             {
-                if (CurrentFieldColor is SolidColorBrush)
+                if (CurrentFieldColor is SolidColorBrush && _gameViewModel.IsTipsEnabled)
                     CurrentFieldColor = _tipService.GetChangedFieldColor(this);
             }
         }

@@ -7,8 +7,7 @@ namespace EightQueensPuzzle.Services.Converters
     {
         public override IList<string> AvailableGameTypes { get; protected set; } = new List<string>()
         {
-            GameTypeNames.WinAsSoonAsPossible,
-            GameTypeNames.TryToMakeIt
+            GameTypeNames.DontMakeMistakes
         };
     }
 }

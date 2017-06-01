@@ -9,5 +9,7 @@ namespace EightQueensPuzzle.Services
         public SettingsViewModel SettingsViewModel => UnityService.Instance.Get().Resolve<SettingsViewModel>();
 
         public GameViewModel GameViewModel => UnityService.Instance.Get().Resolve<GameViewModel>();
+
+        public BoardViewModel BoardViewModel => UnityService.Instance.Get().Resolve<BoardViewModel>();
     }
 }

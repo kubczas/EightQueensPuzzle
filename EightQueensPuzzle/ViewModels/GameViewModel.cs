@@ -1,5 +1,6 @@
 ﻿using BaseReuseServices;
 using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Models.Pawns;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Timer;
 using Microsoft.Practices.Unity;
@@ -7,7 +8,7 @@ using WpfUtilities;
 
 namespace EightQueensPuzzle.ViewModels
 {
-    public class GameViewModel : ViewModelBase, IObserver
+    public class GameViewModel : ViewModelBase, IObserver, IGameViewModel
     {
         private string _gameTime = "0";
         private TimerServiceBase _timerServiceBase;
@@ -45,6 +46,9 @@ namespace EightQueensPuzzle.ViewModels
 
         public RelayCommand PlayGameCommand { get; set; }
 
+        public PawnBase SelectedPawn { get; private set; }
+        public bool IsTipsEnabled { get; set; }
+
         public int NumberOfTips
         {
             get { return _numberOfTips; }
@@ -75,7 +79,7 @@ namespace EightQueensPuzzle.ViewModels
             }
         }
 
-        public object RestartGameCommand { get; set; }
+        public RelayCommand RestartGameCommand { get; set; }
 
         public void Update()
         {
@@ -91,19 +95,21 @@ namespace EightQueensPuzzle.ViewModels
 
         private void LoadGameSettings()
         {
+            SelectedPawn = GameSettings.SelectedPawn;
             NumberOfLeftPawns = GameSettings.SelectedPawn.NumberOfPawns;
             if (TryToMakeIt != null)
             {
                 Timer = TryToMakeIt.MaxTime.ToString();
-                NumberOfTips = TryToMakeIt.NumberOfTips;
+                IsTipsEnabled = TryToMakeIt.IsTipsEnabled;
             }
             if (WinAsSoonAsPossible != null)
             {
+                IsTipsEnabled = WinAsSoonAsPossible.IsTipsEnabled;
                 _timeLimit = WinAsSoonAsPossible.MaxTime;
-                NumberOfTips = WinAsSoonAsPossible.NumberOfTips;
             }
             if (DoNotMakeMistakes == null) return;
 
+            IsTipsEnabled = DoNotMakeMistakes.IsTipsEnabled;
             _mistakesLimit = DoNotMakeMistakes.MaxMistakes;
             NumberOfTips = 0;
         }

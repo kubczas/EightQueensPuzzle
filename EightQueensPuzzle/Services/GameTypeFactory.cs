@@ -13,8 +13,9 @@ namespace EightQueensPuzzle.Services
         private IDictionary<Type, Func<GameType>> _gameTypeStrategy;
         private static IEnumerable<IGameType> _gameTypes;
         private int _timeMax;
-        private int _numberTips;
+        private bool _isTipsEnabled;
         private int _numberOfMistakes;
+
 
         public GameTypeFactory()
         {
@@ -22,20 +23,19 @@ namespace EightQueensPuzzle.Services
             InitStrategy();
         }
 
-        public GameType CreateGameType(string selectedGameType, int timeMax, int numberOfTips, int numberOfMistakes,
-            bool isTipsEnabled)
+        public GameType CreateGameType(string selectedGameType, int timeMax, int numberOfMistakes, bool isTipsEnabled)
         {
-            SetSettings(timeMax, numberOfTips, numberOfMistakes, isTipsEnabled);
+            SetSettings(timeMax, numberOfMistakes, isTipsEnabled);
             var gameType = _gameTypes.FirstOrDefault(type => type.GameTypeName.Equals(selectedGameType));
             var func = _gameTypeStrategy[gameType.GetType()];
             return func.Invoke();
         }
 
-        private void SetSettings(int timeMax, int numberOfTips, int numberOfMistakes, bool isTipsEnabled)
+        private void SetSettings(int timeMax, int numberOfMistakes, bool isTipsEnabled)
         {
             _timeMax = timeMax;
-            _numberTips = isTipsEnabled ? numberOfTips : 0;
             _numberOfMistakes = numberOfMistakes;
+            _isTipsEnabled = isTipsEnabled;
         }
 
         private void InitStrategy()
@@ -53,6 +53,7 @@ namespace EightQueensPuzzle.Services
             var doNotMakeMistakes =
                                     (DoNotMakeMistakes)_gameTypes.First(type => type.GetType() == typeof(DoNotMakeMistakes));
             doNotMakeMistakes.MaxMistakes = _numberOfMistakes;
+            doNotMakeMistakes.IsTipsEnabled = _isTipsEnabled;
             return doNotMakeMistakes;
         }
 
@@ -60,7 +61,7 @@ namespace EightQueensPuzzle.Services
         {
             var winAsSoonAsPossible =
                                     (WinAsSoonAsPossible)_gameTypes.First(type => type.GetType() == typeof(WinAsSoonAsPossible));
-            winAsSoonAsPossible.NumberOfTips = _numberTips;
+            winAsSoonAsPossible.IsTipsEnabled = _isTipsEnabled;
             return winAsSoonAsPossible;
         }
 
@@ -68,8 +69,8 @@ namespace EightQueensPuzzle.Services
         {
             var tryToMakeIt =
                                     (TryToMakeIt)_gameTypes.First(type => type.GetType() == typeof(TryToMakeIt));
-            tryToMakeIt.NumberOfTips = _numberTips;
             tryToMakeIt.MaxTime = _timeMax;
+            tryToMakeIt.IsTipsEnabled = _isTipsEnabled;
             return tryToMakeIt;
         }
     }

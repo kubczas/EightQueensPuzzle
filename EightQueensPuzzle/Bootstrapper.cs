@@ -23,6 +23,7 @@ namespace EightQueensPuzzle
                 RegisterType<IGameType, TryToMakeIt>("TryToMakeIt").
                 RegisterType<IGameType, WinAsSoonAsPossible>("WinAsSoonAsPossible").
                 RegisterType<IGameType, DoNotMakeMistakes>("DoNotMakeMistakes").
+                RegisterType<IGameViewModel, GameViewModel>(new ContainerControlledLifetimeManager()).
                 RegisterType<IChessPawnFactory, ChessPawnFactory>().
                 RegisterType<IDialogCoordinator, DialogCoordinator>().
                 RegisterType<IGameTypeFactory, GameTypeFactory>(new ContainerControlledLifetimeManager()).

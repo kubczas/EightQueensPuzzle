@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using EightQueensPuzzle.Constants;
 using EightQueensPuzzle.Models;
@@ -49,6 +48,8 @@ namespace EightQueensPuzzle.ViewModels
             set
             {
                 _selectedGameType = value;
+                if (value.Equals(GameTypeNames.DontMakeMistakes))
+                    IsTipsEnabled = false;
                 OnPropertyChanged(nameof(SelectedGameType));
             }
         }
@@ -60,16 +61,6 @@ namespace EightQueensPuzzle.ViewModels
             {
                 _timeMax = value;
                 OnPropertyChanged(nameof(TimeMax));
-            }
-        }
-
-        public int NumberOfTips
-        {
-            get { return _numberOfTips; }
-            set
-            {
-                _numberOfTips = value;
-                OnPropertyChanged(nameof(NumberOfTips));
             }
         }
 
@@ -114,8 +105,7 @@ namespace EightQueensPuzzle.ViewModels
             controller.SetIndeterminate();
 
             GameSettings.SelectedPawn = _chessPawnFactory.CreatePawn(_selectedPawn + 1);
-            GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfTips, NumberOfPossibleMistakes,
-                IsTipsEnabled);
+            GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfPossibleMistakes, IsTipsEnabled);
             _settingsService.Save(GameSettings);
 
             await controller.CloseAsync();
@@ -129,16 +119,17 @@ namespace EightQueensPuzzle.ViewModels
             if (TryToMakeIt != null)
             {
                 TimeMax = TryToMakeIt.MaxTime;
-                NumberOfTips = TryToMakeIt.NumberOfTips;
+                IsTipsEnabled = TryToMakeIt.IsTipsEnabled;
             }
             if (WinAsSoonAsPossible != null)
             {
                 TimeMax = WinAsSoonAsPossible.MaxTime;
-                NumberOfTips = WinAsSoonAsPossible.NumberOfTips;
+                IsTipsEnabled = WinAsSoonAsPossible.IsTipsEnabled;
             }
             if (DoNotMakeMistakes != null)
             {
                 NumberOfPossibleMistakes = DoNotMakeMistakes.MaxMistakes;
+                IsTipsEnabled = DoNotMakeMistakes.IsTipsEnabled;
             }
         }
     }

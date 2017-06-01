@@ -142,7 +142,7 @@
     <Compile Include="Models\GameSettings.cs" />
     <Compile Include="Models\GameTypes\DoNotMakeMistakes.cs" />
     <Compile Include="Models\IChessboard.cs" />
-    <Compile Include="Models\GameType.cs" />
+    <Compile Include="Models\GameTypes\GameType.cs" />
     <Compile Include="Models\GameTypes\TryToMakeIt.cs" />
     <Compile Include="Models\GameTypes\WinAsSoonAsPossible.cs" />
     <Compile Include="Models\IGameType.cs" />
@@ -197,6 +197,7 @@
     <Compile Include="ValidationRules\NumericTextBoxValidationRule.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
+    <Compile Include="ViewModels\IGameViewModel.cs" />
     <Compile Include="ViewModels\IMenuPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
