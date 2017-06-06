@@ -14,20 +14,21 @@ namespace EightQueensPuzzle.ViewModels
         private readonly IGameTypeFactory _gameTypeFactory;
         private readonly IChessPawnFactory _chessPawnFactory;
         private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly IChessboard _chessboard;
         private string _selectedGameType;
         private int _selectedPawn;
-        private int _numberOfTips;
         private int _timeMax;
         private int _numberOfPossibleMistakes;
         private bool _isTipsEnabled;
         private ObservableCollection<string> _gameTypes;
 
-        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory, IChessPawnFactory chessPawnFactory, IDialogCoordinator dialogCoordinator) : base(settingsService)
+        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory, IChessPawnFactory chessPawnFactory, IDialogCoordinator dialogCoordinator, IChessboard chessboard) : base(settingsService)
         {
             _settingsService = settingsService;
             _gameTypeFactory = gameTypeFactory;
             _chessPawnFactory = chessPawnFactory;
             _dialogCoordinator = dialogCoordinator;
+            _chessboard = chessboard;
             _selectedGameType = GameTypes.FirstOrDefault();
             SaveCommand = new DelegateCommand(SaveSettings);
             LoadSettings();
@@ -101,14 +102,14 @@ namespace EightQueensPuzzle.ViewModels
 
         private async void SaveSettings(object obj)
         {
-            ProgressDialogController controller = await _dialogCoordinator.ShowProgressAsync(this, "Saving", "Saving");
-            controller.SetIndeterminate();
+            var controller = _dialogCoordinator.ShowMessageAsync(this, "Saving", "Saving");
 
             GameSettings.SelectedPawn = _chessPawnFactory.CreatePawn(_selectedPawn + 1);
             GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfPossibleMistakes, IsTipsEnabled);
             _settingsService.Save(GameSettings);
+            _chessboard.ClearChessboard();
 
-            await controller.CloseAsync();
+            await controller;
         }
 
         private void SetGameTypeSettings()

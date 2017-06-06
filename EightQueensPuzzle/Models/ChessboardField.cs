@@ -67,15 +67,19 @@ namespace EightQueensPuzzle.Models
                     SetPawnOnField();
                     _gameViewModel.NumberOfLeftPawns = _gameViewModel.NumberOfLeftPawns - 1;
                 }
-                else if(Equals(CurrentFieldColor, FieldColorHelper.GoodFieldColor))
+                else if(Equals(CurrentFieldColor, FieldColorHelper.GoodFieldColor) || IsPawnSet)
                 {
                     _gameViewModel.NumberOfLeftPawns = _gameViewModel.NumberOfLeftPawns + 1;
                     ClearField();
                 }
+                else
+                {
+                    _gameViewModel.NumberOfMistakes = _gameViewModel.NumberOfMistakes + 1;
+                }
             }
         }
 
-        private void ClearField()
+        public void ClearField()
         {
             IsPawnSet = false;
             CurrentFieldColor = DefaultFieldColor;

@@ -8,5 +8,6 @@ namespace EightQueensPuzzle.Models
 
         int ChessboardSize { get; }
         void InitChessboard();
+        void ClearChessboard();
     }
 }

@@ -7,14 +7,17 @@ namespace EightQueensPuzzle.Services.Timer
     {
         private readonly List<IObserver> _observers = new List<IObserver>();
         protected readonly System.Timers.Timer GameTimer;
-        public int Time { get; set; }
+        public int Time { get; protected set; }
+        public int StartTime { get; set; }
+
+        public abstract bool IsCountingFinished { get; }
 
         protected TimerServiceBase()
         {
             GameTimer = new System.Timers.Timer();
         }
 
-        public string TimerValue { get; protected set; }
+        public int TimerValue { get; protected set; }
 
         public abstract void InitTimer(IObserver viewModel);
 
@@ -38,5 +41,7 @@ namespace EightQueensPuzzle.Services.Timer
         {
             _observers.ForEach(x => x.Update());
         }
+
+        public abstract void Restart();
     }
 }

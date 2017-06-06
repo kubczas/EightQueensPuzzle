@@ -5,6 +5,8 @@ namespace EightQueensPuzzle.Services.Timer
 {
     public class DecreaseTimer : TimerServiceBase
     {
+        public override bool IsCountingFinished => TimerValue == 0;
+
         public override void InitTimer(IObserver viewModel)
         {
             GameTimer.Elapsed += new ElapsedEventHandler(DecreaseTime);
@@ -13,10 +15,15 @@ namespace EightQueensPuzzle.Services.Timer
             Subscribe(viewModel);
         }
 
+        public override void Restart()
+        {
+            Time = StartTime;
+        }
+
         private void DecreaseTime(object sender, EventArgs e)
         {
             if (Time >= 0)
-                TimerValue = (Time--).ToString();
+                TimerValue = Time--;
             else
             {
                 GameTimer.Stop();

@@ -1,8 +1,10 @@
-﻿using BaseReuseServices;
+﻿using System.Threading.Tasks;
+using BaseReuseServices;
 using EightQueensPuzzle.Models;
 using EightQueensPuzzle.Models.Pawns;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Timer;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.Unity;
 using WpfUtilities;
 
@@ -10,28 +12,34 @@ namespace EightQueensPuzzle.ViewModels
 {
     public class GameViewModel : ViewModelBase, IObserver, IGameViewModel
     {
-        private string _gameTime = "0";
+        private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly IChessboard _chessboard;
+        private readonly ITimerServiceManager _timerServiceManager;
         private TimerServiceBase _timerServiceBase;
-        private int _numberOfTips;
+        private bool _isGameStarted;
+        private int _gameTime;
         private int _numberOfLeftPawns;
         private int _numberOfMistakes;
-        private int _timeLimit;
-        private int _mistakesLimit;
+        private int _timeLimit = int.MaxValue;
+        private int _mistakesLimit = int.MaxValue;
 
-        public GameViewModel(ISettingsService settingsService) : base(settingsService)
+        public GameViewModel(ISettingsService settingsService, IDialogCoordinator dialogCoordinator, IChessboard chessboard) : base(settingsService)
         {
+            _dialogCoordinator = dialogCoordinator;
+            _chessboard = chessboard;
             LoadGameSettings();
             PlayGameCommand = new RelayCommand(PlayGame);
+            RestartGameCommand = new RelayCommand(RestartGame);
+            _timerServiceManager = UnityService.Instance.Get().Resolve<ITimerServiceManager>();
         }
 
-        private void PlayGame(object obj)
-        {
-            ITimerServiceManager timerServiceManager = UnityService.Instance.Get().Resolve<ITimerServiceManager>();
-            InitTimer(timerServiceManager);
-            ChessboardField.IsReadonly = false;
-        }
+        public RelayCommand PlayGameCommand { get; set; }
 
-        public string Timer
+        public RelayCommand RestartGameCommand { get; set; }
+
+        public PawnBase SelectedPawn { get; private set; }
+
+        public int Timer
         {
             get
             {
@@ -41,23 +49,11 @@ namespace EightQueensPuzzle.ViewModels
             {
                 _gameTime = value;
                 OnPropertyChanged(nameof(Timer));
+                VerifyIfPlayerLoseGame();
             }
         }
 
-        public RelayCommand PlayGameCommand { get; set; }
-
-        public PawnBase SelectedPawn { get; private set; }
         public bool IsTipsEnabled { get; set; }
-
-        public int NumberOfTips
-        {
-            get { return _numberOfTips; }
-            set
-            {
-                _numberOfTips = value;
-                OnPropertyChanged(nameof(NumberOfTips));
-            }
-        }
 
         public int NumberOfLeftPawns
         {
@@ -66,6 +62,7 @@ namespace EightQueensPuzzle.ViewModels
             {
                 _numberOfLeftPawns = value;
                 OnPropertyChanged(nameof(NumberOfLeftPawns));
+                VerifyIfPlayerWonGame();
             }
         }
 
@@ -76,10 +73,9 @@ namespace EightQueensPuzzle.ViewModels
             {
                 _numberOfMistakes = value;
                 OnPropertyChanged(nameof(NumberOfMistakes));
+                VerifyIfPlayerLoseGame();
             }
         }
-
-        public RelayCommand RestartGameCommand { get; set; }
 
         public void Update()
         {
@@ -99,7 +95,7 @@ namespace EightQueensPuzzle.ViewModels
             NumberOfLeftPawns = GameSettings.SelectedPawn.NumberOfPawns;
             if (TryToMakeIt != null)
             {
-                Timer = TryToMakeIt.MaxTime.ToString();
+                Timer = TryToMakeIt.MaxTime;
                 IsTipsEnabled = TryToMakeIt.IsTipsEnabled;
             }
             if (WinAsSoonAsPossible != null)
@@ -111,7 +107,41 @@ namespace EightQueensPuzzle.ViewModels
 
             IsTipsEnabled = DoNotMakeMistakes.IsTipsEnabled;
             _mistakesLimit = DoNotMakeMistakes.MaxMistakes;
-            NumberOfTips = 0;
+        }
+
+        private void VerifyIfPlayerWonGame()
+        {
+            if (_numberOfLeftPawns == 0)
+                _dialogCoordinator.ShowMessageAsync(this, "Congratulations", "You won game !!!");
+        }
+
+        private void VerifyIfPlayerLoseGame()
+        {
+            if (!_isGameStarted) return;
+
+            if (!_timerServiceBase.IsCountingFinished && _timeLimit != Timer && _mistakesLimit != NumberOfMistakes)
+                return;
+
+            _dialogCoordinator.ShowMessageAsync(this, "Lose", "You lose game!!!");
+            _isGameStarted = false;
+        }
+
+        private void PlayGame(object obj)
+        {
+            if (_isGameStarted) return;
+
+            InitTimer(_timerServiceManager);
+            ChessboardField.IsReadonly = false;
+            _isGameStarted = true;
+        }
+
+        private async void RestartGame(object obj)
+        {
+            Task<MessageDialogResult> progressDialogController =_dialogCoordinator.ShowMessageAsync(this, "Restart", "Restart game...");
+            LoadGameSettings();
+            _chessboard.ClearChessboard();
+            _timerServiceBase.Restart();
+            await progressDialogController;
         }
     }
 }
