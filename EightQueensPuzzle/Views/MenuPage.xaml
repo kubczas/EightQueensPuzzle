@@ -13,7 +13,10 @@
         <viewModels:MenuViewModel/>
     </Page.DataContext>
     <Grid>
-       <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.Background>
+            <ImageBrush ImageSource="/EightQueensPuzzle;component/Resources/chees.jpg"/>
+        </Grid.Background>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="White">
         <controls:Tile Title="Play" 
                     TiltFactor="1"
                     Click="Navigate"

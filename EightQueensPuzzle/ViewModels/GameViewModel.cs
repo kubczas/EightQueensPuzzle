@@ -130,6 +130,7 @@ namespace EightQueensPuzzle.ViewModels
         {
             if (_isGameStarted) return;
 
+            LoadGameSettings();
             InitTimer(_timerServiceManager);
             ChessboardField.IsReadonly = false;
             _isGameStarted = true;
@@ -140,7 +141,9 @@ namespace EightQueensPuzzle.ViewModels
             Task<MessageDialogResult> progressDialogController =_dialogCoordinator.ShowMessageAsync(this, "Restart", "Restart game...");
             LoadGameSettings();
             _chessboard.ClearChessboard();
-            _timerServiceBase.Restart();
+            ChessboardField.IsReadonly = true;
+            _timerServiceBase?.Reset();
+            _isGameStarted = false;
             await progressDialogController;
         }
     }

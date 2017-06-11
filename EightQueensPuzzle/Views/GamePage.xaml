@@ -33,12 +33,21 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="45" Height="45" Click="Back">
+                    <Rectangle Width="20"
+                Height="20"
+                Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_information_circle}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
             </WrapPanel>
         </StackPanel>
         <local:BoardUserControl Grid.Column="0" Grid.Row="1" Grid.RowSpan="2"/>
         <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="1">
             <Button Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding PlayGameCommand}">Play!</Button>
-            <Button Command="{Binding RestartGameCommand}" Margin="10">restart</Button>
+            <Button Command="{Binding RestartGameCommand}" Margin="10">Reset</Button>
             <TextBlock Foreground="#64B5F6" FontSize="16" Margin="10">Time</TextBlock>
             <TextBox controls:TextBoxHelper.Watermark="{Binding Timer}" Height="20" Margin="5" IsReadOnly="True"/>
             <TextBlock Foreground="#64B5F6" FontSize="14" Margin="10" TextWrapping="Wrap">Number of left pawns</TextBlock>
