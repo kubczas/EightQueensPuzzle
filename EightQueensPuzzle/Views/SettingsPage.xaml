@@ -41,44 +41,44 @@
                    Margin="0, 0, 10, 0">
                     <controls:FlipView.Items>
                         <Grid Background="#64B5F6">
-                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                            <Rectangle Margin="0, 0, 10, 0" Width="300" Height="320">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_pawn}" />
+                                    <ImageBrush ImageSource="/EightQueensPuzzle;component/Resources/Images/pawn.JPG" ></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>
                         <Grid Background="#64B5F6">
-                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                            <Rectangle Margin="0, 0, 10, 0" Width="300" Height="320">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_horse}" />
+                                    <ImageBrush ImageSource="/EightQueensPuzzle;component/Resources/Images/knight.JPG" ></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>
                         <Grid Background="#64B5F6">
-                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                            <Rectangle Margin="0, 0, 10, 0" Width="300" Height="320">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_bishop}" />
+                                    <ImageBrush ImageSource="/EightQueensPuzzle;component/Resources/Images/bishop.JPG" ></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>
                         <Grid Background="#64B5F6">
-                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                            <Rectangle Margin="0, 0, 10, 0" Width="300" Height="320">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_rook}" />
+                                    <ImageBrush ImageSource="/EightQueensPuzzle;component/Resources/Images/rook.JPG" ></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>
                         <Grid Background="#64B5F6">
-                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                            <Rectangle Margin="0, 0, 10, 0" Width="300" Height="320">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_queen}" />
+                                    <ImageBrush ImageSource="/EightQueensPuzzle;component/Resources/Images/queen.JPG" ></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>
                         <Grid Background="#64B5F6">
-                            <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                            <Rectangle Margin="0, 0, 10, 0" Width="300" Height="320">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chess_king}" />
+                                    <ImageBrush ImageSource="/EightQueensPuzzle;component/Resources/Images/king.JPG" ></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>

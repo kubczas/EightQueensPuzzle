@@ -8,5 +8,6 @@ namespace EightQueensPuzzle.Models.Pawns
         public abstract BitmapImage Image { get; }
         public abstract int NumberOfPawns { get; }
         public abstract int Order { get; }
+        public abstract string Name { get; }
     }
 }

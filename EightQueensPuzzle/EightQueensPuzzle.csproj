@@ -137,7 +137,6 @@
     <Compile Include="Enums\Pawn.cs" />
     <Compile Include="Enums\TimerType.cs" />
     <Compile Include="Helpers\FieldColorHelper.cs" />
-    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Models\Chessboard.cs" />
     <Compile Include="Models\GameSettings.cs" />
     <Compile Include="Models\GameTypes\DoNotMakeMistakes.cs" />
@@ -310,19 +309,31 @@
     <Resource Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\bishop.png" />
+    <Resource Include="Resources\Icons\bishop.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\king.png" />
-    <Resource Include="Resources\knight.png" />
-    <Resource Include="Resources\queen.png" />
-    <Resource Include="Resources\rook.png" />
+    <Resource Include="Resources\Icons\king.png" />
+    <Resource Include="Resources\Icons\knight.png" />
+    <Resource Include="Resources\Icons\queen.png" />
+    <Resource Include="Resources\Icons\rook.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\pawn..png" />
+    <Resource Include="Resources\Icons\pawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\chees.jpg" />
+    <Resource Include="Resources\Images\chees.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\king.jpg" />
+    <Resource Include="Resources\Images\knight.JPG" />
+    <Resource Include="Resources\Images\queen.jpg" />
+    <Resource Include="Resources\Images\rook.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\pawn.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\bishop.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

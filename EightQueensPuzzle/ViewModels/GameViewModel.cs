@@ -15,7 +15,7 @@ namespace EightQueensPuzzle.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IChessboard _chessboard;
         private readonly ITimerServiceManager _timerServiceManager;
-        private TimerServiceBase _timerServiceBase;
+        private TimerServiceBase _timerService;
         private bool _isGameStarted;
         private int _gameTime;
         private int _numberOfLeftPawns;
@@ -79,14 +79,14 @@ namespace EightQueensPuzzle.ViewModels
 
         public void Update()
         {
-            Timer = _timerServiceBase.TimerValue;
+            Timer = _timerService.TimerValue;
         }
 
         private void InitTimer(ITimerServiceManager timerServiceManager)
         {
             if (timerServiceManager != null)
-                _timerServiceBase = timerServiceManager.GetTimer(GameSettings.GameType.Timer, 100);
-            _timerServiceBase.InitTimer(this);
+                _timerService = timerServiceManager.GetTimer(GameSettings.GameType.Timer, 100);
+            _timerService.InitTimer(this);
         }
 
         private void LoadGameSettings()
@@ -119,11 +119,12 @@ namespace EightQueensPuzzle.ViewModels
         {
             if (!_isGameStarted) return;
 
-            if (!_timerServiceBase.IsCountingFinished && _timeLimit != Timer && _mistakesLimit != NumberOfMistakes)
+            if (!_timerService.IsCountingFinished && _timeLimit != Timer && _mistakesLimit >= NumberOfMistakes)
                 return;
 
             _dialogCoordinator.ShowMessageAsync(this, "Lose", "You lose game!!!");
             _isGameStarted = false;
+            _timerService.Reset();
         }
 
         private void PlayGame(object obj)
@@ -142,8 +143,9 @@ namespace EightQueensPuzzle.ViewModels
             LoadGameSettings();
             _chessboard.ClearChessboard();
             ChessboardField.IsReadonly = true;
-            _timerServiceBase?.Reset();
+            _timerService?.Reset();
             _isGameStarted = false;
+            NumberOfMistakes = 0;
             await progressDialogController;
         }
     }

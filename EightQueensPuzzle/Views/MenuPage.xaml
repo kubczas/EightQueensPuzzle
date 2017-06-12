@@ -14,7 +14,7 @@
     </Page.DataContext>
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/EightQueensPuzzle;component/Resources/chees.jpg"/>
+            <ImageBrush ImageSource="/Resources/Images/chees.jpg"/>
         </Grid.Background>
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="White">
         <controls:Tile Title="Play" 
