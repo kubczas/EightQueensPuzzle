@@ -124,7 +124,7 @@
                 <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="2" Grid.Column="0">Enable tips:</TextBlock>
                 <controls:ToggleSwitch x:Name="TipsToggleSwitch" Margin="3" Foreground="#64B5F6" Grid.Row="2" Grid.Column="1" Width="250" HorizontalAlignment="Left" IsChecked="{Binding IsTipsEnabled}" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource EnableTipsConverter}}"/>
                 <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="4" Grid.Column="0">Number of possible mistakes:</TextBlock>
-                <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="4" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left" Value="{Binding NumberOfPossibleMistakes}" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource NumberOfPossibleMistakesConverter}}"/>
+                <controls:NumericUpDown Minimum = "0" Maximum = "100" Interval = "1" Grid.Row="4" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left" Value="{Binding NumberOfMistakes}" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource NumberOfPossibleMistakesConverter}}"/>
             </Grid>
             <Button HorizontalAlignment="Center" Width="150" Style="{DynamicResource SquareButtonStyle}" Margin="10" Command="{Binding SaveCommand}" Content="Save"></Button>
         </StackPanel>

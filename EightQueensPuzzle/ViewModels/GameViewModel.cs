@@ -1,36 +1,27 @@
 ﻿using System.Threading.Tasks;
-using BaseReuseServices;
 using EightQueensPuzzle.Models;
 using EightQueensPuzzle.Models.Pawns;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Timer;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.Practices.Unity;
 using WpfUtilities;
 
 namespace EightQueensPuzzle.ViewModels
 {
     public class GameViewModel : ViewModelBase, IObserver, IGameViewModel
     {
-        private readonly IDialogCoordinator _dialogCoordinator;
-        private readonly IChessboard _chessboard;
-        private readonly ITimerServiceManager _timerServiceManager;
         private TimerServiceBase _timerService;
         private bool _isGameStarted;
         private int _gameTime;
         private int _numberOfLeftPawns;
         private int _numberOfMistakes;
-        private int _timeLimit = int.MaxValue;
-        private int _mistakesLimit = int.MaxValue;
 
-        public GameViewModel(ISettingsService settingsService, IDialogCoordinator dialogCoordinator, IChessboard chessboard) : base(settingsService)
+        public GameViewModel(ISettingsService settingsService, IDialogCoordinator dialogCoordinator, IChessboard chessboard, ITimerServiceManager timerServiceManager) : base(settingsService, dialogCoordinator,chessboard)
         {
-            _dialogCoordinator = dialogCoordinator;
-            _chessboard = chessboard;
             LoadGameSettings();
+            InitTimer(timerServiceManager);
             PlayGameCommand = new RelayCommand(PlayGame);
             RestartGameCommand = new RelayCommand(RestartGame);
-            _timerServiceManager = UnityService.Instance.Get().Resolve<ITimerServiceManager>();
         }
 
         public RelayCommand PlayGameCommand { get; set; }
@@ -85,7 +76,7 @@ namespace EightQueensPuzzle.ViewModels
         private void InitTimer(ITimerServiceManager timerServiceManager)
         {
             if (timerServiceManager != null)
-                _timerService = timerServiceManager.GetTimer(GameSettings.GameType.Timer, 100);
+                _timerService = timerServiceManager.GetTimer(GameSettings.GameType.Timer, Timer);
             _timerService.InitTimer(this);
         }
 
@@ -101,28 +92,28 @@ namespace EightQueensPuzzle.ViewModels
             if (WinAsSoonAsPossible != null)
             {
                 IsTipsEnabled = WinAsSoonAsPossible.IsTipsEnabled;
-                _timeLimit = WinAsSoonAsPossible.MaxTime;
+                TimeLimit = WinAsSoonAsPossible.MaxTime;
             }
             if (DoNotMakeMistakes == null) return;
 
             IsTipsEnabled = DoNotMakeMistakes.IsTipsEnabled;
-            _mistakesLimit = DoNotMakeMistakes.MaxMistakes;
+            NumberOfPossibleMistakes = DoNotMakeMistakes.MaxMistakes;
         }
 
         private void VerifyIfPlayerWonGame()
         {
             if (_numberOfLeftPawns == 0)
-                _dialogCoordinator.ShowMessageAsync(this, "Congratulations", "You won game !!!");
+                DialogCoordinator.ShowMessageAsync(this, "Congratulations", "You won game !!!");
         }
 
         private void VerifyIfPlayerLoseGame()
         {
             if (!_isGameStarted) return;
 
-            if (!_timerService.IsCountingFinished && _timeLimit != Timer && _mistakesLimit >= NumberOfMistakes)
+            if (!_timerService.IsCountingFinished && TimeLimit != Timer && NumberOfPossibleMistakes >= NumberOfMistakes)
                 return;
 
-            _dialogCoordinator.ShowMessageAsync(this, "Lose", "You lose game!!!");
+            DialogCoordinator.ShowMessageAsync(this, "Lose", "You lose game!!!");
             _isGameStarted = false;
             _timerService.Reset();
         }
@@ -130,18 +121,18 @@ namespace EightQueensPuzzle.ViewModels
         private void PlayGame(object obj)
         {
             if (_isGameStarted) return;
-
+            _timerService.Start();
             LoadGameSettings();
-            InitTimer(_timerServiceManager);
+
             ChessboardField.IsReadonly = false;
             _isGameStarted = true;
         }
 
         private async void RestartGame(object obj)
         {
-            Task<MessageDialogResult> progressDialogController =_dialogCoordinator.ShowMessageAsync(this, "Restart", "Restart game...");
+            Task<MessageDialogResult> progressDialogController =DialogCoordinator.ShowMessageAsync(this, "Restart", "Restart game...");
             LoadGameSettings();
-            _chessboard.ClearChessboard();
+            Chessboard.ClearChessboard();
             ChessboardField.IsReadonly = true;
             _timerService?.Reset();
             _isGameStarted = false;

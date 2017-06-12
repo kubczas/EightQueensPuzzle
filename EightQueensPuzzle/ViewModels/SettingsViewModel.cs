@@ -13,22 +13,17 @@ namespace EightQueensPuzzle.ViewModels
         private readonly ISettingsService _settingsService;
         private readonly IGameTypeFactory _gameTypeFactory;
         private readonly IChessPawnFactory _chessPawnFactory;
-        private readonly IDialogCoordinator _dialogCoordinator;
-        private readonly IChessboard _chessboard;
+
         private string _selectedGameType;
         private int _selectedPawn;
-        private int _timeMax;
-        private int _numberOfPossibleMistakes;
         private bool _isTipsEnabled;
         private ObservableCollection<string> _gameTypes;
 
-        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory, IChessPawnFactory chessPawnFactory, IDialogCoordinator dialogCoordinator, IChessboard chessboard) : base(settingsService)
+        public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory, IChessPawnFactory chessPawnFactory, IDialogCoordinator dialogCoordinator, IChessboard chessboard) : base(settingsService, dialogCoordinator, chessboard)
         {
             _settingsService = settingsService;
             _gameTypeFactory = gameTypeFactory;
             _chessPawnFactory = chessPawnFactory;
-            _dialogCoordinator = dialogCoordinator;
-            _chessboard = chessboard;
             _selectedGameType = GameTypes.FirstOrDefault();
             SaveCommand = new DelegateCommand(SaveSettings);
             LoadSettings();
@@ -57,21 +52,21 @@ namespace EightQueensPuzzle.ViewModels
 
         public int TimeMax
         {
-            get { return _timeMax; }
+            get { return TimeLimit; }
             set
             {
-                _timeMax = value;
+                TimeLimit = value;
                 OnPropertyChanged(nameof(TimeMax));
             }
         }
 
-        public int NumberOfPossibleMistakes
+        public int NumberOfMistakes
         {
-            get { return _numberOfPossibleMistakes; }
+            get { return NumberOfPossibleMistakes; }
             set
             {
-                _numberOfPossibleMistakes = value;
-                OnPropertyChanged(nameof(NumberOfPossibleMistakes));
+                NumberOfPossibleMistakes = value;
+                OnPropertyChanged(nameof(NumberOfMistakes));
             }
         }
 
@@ -102,12 +97,12 @@ namespace EightQueensPuzzle.ViewModels
 
         private async void SaveSettings(object obj)
         {
-            var controller = _dialogCoordinator.ShowMessageAsync(this, "Saving", "Saving");
+            var controller = DialogCoordinator.ShowMessageAsync(this, "Saving", "Saving");
 
             GameSettings.SelectedPawn = _chessPawnFactory.CreatePawn(_selectedPawn + 1);
-            GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfPossibleMistakes, IsTipsEnabled);
+            GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfMistakes, IsTipsEnabled);
             _settingsService.Save(GameSettings);
-            _chessboard.ClearChessboard();
+            Chessboard.ClearChessboard();
 
             await controller;
         }
@@ -127,11 +122,10 @@ namespace EightQueensPuzzle.ViewModels
                 TimeMax = WinAsSoonAsPossible.MaxTime;
                 IsTipsEnabled = WinAsSoonAsPossible.IsTipsEnabled;
             }
-            if (DoNotMakeMistakes != null)
-            {
-                NumberOfPossibleMistakes = DoNotMakeMistakes.MaxMistakes;
-                IsTipsEnabled = DoNotMakeMistakes.IsTipsEnabled;
-            }
+            if (DoNotMakeMistakes == null) return;
+
+            NumberOfMistakes = DoNotMakeMistakes.MaxMistakes;
+            IsTipsEnabled = DoNotMakeMistakes.IsTipsEnabled;
         }
     }
 }

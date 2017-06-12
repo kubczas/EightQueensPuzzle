@@ -1,15 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using BaseReuseServices;
 using EightQueensPuzzle.Models;
-using EightQueensPuzzle.Services;
 using Microsoft.Practices.Prism.Mvvm;
 
 namespace EightQueensPuzzle.ViewModels
 {
-    public class BoardViewModel : ViewModelBase
+    public class BoardViewModel : BindableBase
     {
         private readonly IChessboard _chessboard;
-        public BoardViewModel(ISettingsService settingsService) : base(settingsService)
+        public BoardViewModel()
         {
             _chessboard = UnityService.Instance.Resolve<IChessboard>();
             _chessboard.InitChessboard();

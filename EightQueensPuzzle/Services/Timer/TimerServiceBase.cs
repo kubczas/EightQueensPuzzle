@@ -10,7 +10,7 @@ namespace EightQueensPuzzle.Services.Timer
         public int Time { get; protected set; }
         public int StartTime { get; set; }
 
-        public abstract bool IsCountingFinished { get; protected set; }
+        public bool IsCountingFinished { get; protected set; }
 
         protected TimerServiceBase()
         {
@@ -42,6 +42,16 @@ namespace EightQueensPuzzle.Services.Timer
             _observers.ForEach(x => x.Update());
         }
 
-        public abstract void Reset();
+        public void Reset()
+        {
+            GameTimer.Stop();
+            GameTimer.Close();
+            Time = StartTime;
+        }
+
+        public void Start()
+        {
+            GameTimer.Start();
+        }
     }
 }

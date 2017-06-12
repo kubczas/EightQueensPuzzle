@@ -56,7 +56,6 @@
             <TextBlock Foreground="#64B5F6" FontSize="14" Margin="10" TextWrapping="Wrap" Text="{Binding GameSettings.SelectedPawn.Name}"></TextBlock>
             <TextBlock Foreground="#64B5F6" FontSize="14" Margin="10" TextWrapping="Wrap">Number of mistakes</TextBlock>
             <TextBox controls:TextBoxHelper.Watermark="{Binding NumberOfMistakes}" Height="20" Margin="5" IsReadOnly="True"/>
-            <Image Source="{Binding GameSettings.SelectedPawn.Image}" Margin="20" MaxHeight="50" MaxWidth="50" ></Image>
         </StackPanel>
     </Grid>
 </Page>

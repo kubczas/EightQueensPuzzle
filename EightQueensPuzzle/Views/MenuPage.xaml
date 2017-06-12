@@ -9,9 +9,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="800"
       Title="MenuPage">
-    <Page.DataContext>
-        <viewModels:MenuViewModel/>
-    </Page.DataContext>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Resources/Images/chees.jpg"/>
