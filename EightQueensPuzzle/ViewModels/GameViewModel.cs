@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using EightQueensPuzzle.Models;
+﻿using EightQueensPuzzle.Models;
 using EightQueensPuzzle.Models.Pawns;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Timer;
+using EightQueensPuzzle.Views;
 using MahApps.Metro.Controls.Dialogs;
 using WpfUtilities;
 
@@ -21,7 +21,14 @@ namespace EightQueensPuzzle.ViewModels
             LoadGameSettings();
             InitTimer(timerServiceManager);
             PlayGameCommand = new RelayCommand(PlayGame);
-            RestartGameCommand = new RelayCommand(RestartGame);
+            RestartGameCommand = new RelayCommand(RestetGame);
+            DisplayInfoCommand = new RelayCommand(DisplayInfo);
+        }
+
+        private void DisplayInfo(object obj)
+        {
+            var infoWindow = new InfoWindow();
+            infoWindow.Show();
         }
 
         public RelayCommand PlayGameCommand { get; set; }
@@ -67,6 +74,8 @@ namespace EightQueensPuzzle.ViewModels
                 VerifyIfPlayerLoseGame();
             }
         }
+
+        public RelayCommand DisplayInfoCommand { get; set; }
 
         public void Update()
         {
@@ -121,6 +130,7 @@ namespace EightQueensPuzzle.ViewModels
         private void PlayGame(object obj)
         {
             if (_isGameStarted) return;
+
             _timerService.Start();
             LoadGameSettings();
 
@@ -128,16 +138,21 @@ namespace EightQueensPuzzle.ViewModels
             _isGameStarted = true;
         }
 
-        private async void RestartGame(object obj)
+        private async void RestetGame(object obj)
         {
-            Task<MessageDialogResult> progressDialogController =DialogCoordinator.ShowMessageAsync(this, "Restart", "Restart game...");
+            var progressDialogController =DialogCoordinator.ShowMessageAsync(this, "Restart", "Restart game...");
             LoadGameSettings();
+            ResetSettings();
+            await progressDialogController;
+        }
+
+        private void ResetSettings()
+        {
             Chessboard.ClearChessboard();
             ChessboardField.IsReadonly = true;
             _timerService?.Reset();
             _isGameStarted = false;
             NumberOfMistakes = 0;
-            await progressDialogController;
         }
     }
 }

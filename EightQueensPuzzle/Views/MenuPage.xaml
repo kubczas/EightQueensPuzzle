@@ -14,27 +14,19 @@
             <ImageBrush ImageSource="/Resources/Images/chees.jpg"/>
         </Grid.Background>
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="White">
-        <controls:Tile Title="Play" 
-                    TiltFactor="1"
+            <controls:Tile Title="Play" 
+                    Content="{DynamicResource appbar_social_playstation}"
                     Click="Navigate"
+                    Width="100" Height="100" >
+            </controls:Tile>
+            <controls:Tile Title="Settings" 
+                    Content="{DynamicResource appbar_settings}"
                     Width="100" Height="100" 
-                    Count="1">
-            <Hyperlink NavigateUri="GamePage.xaml">
-            </Hyperlink>
-        </controls:Tile>
-        <controls:Tile Title="Settings" 
-                    TiltFactor="2"
+                    Click="Navigate">
+            </controls:Tile>
+            <controls:Tile Title="About" 
                     Width="100" Height="100" 
-                    Click="Navigate"
-                    Count="2">
-        <Hyperlink NavigateUri="SettingsPage.xaml">
-        </Hyperlink>
-        </controls:Tile>
-        <controls:Tile Title="About" 
-                    TiltFactor="3"
-                    Width="100" Height="100" 
-                       Click="Navigate"
-                    Count="3"/>
+                       Click="Navigate" Content="{DynamicResource appbar_book_perspective_help}"/>
         </WrapPanel>
     </Grid>
 </Page>

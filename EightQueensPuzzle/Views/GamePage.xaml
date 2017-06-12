@@ -33,7 +33,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="45" Height="45" Click="Back">
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="45" Height="45" Command="{Binding DisplayInfoCommand}">
                     <Rectangle Width="20"
                 Height="20"
                 Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -53,7 +53,7 @@
             <TextBlock Foreground="#64B5F6" FontSize="14" Margin="10" TextWrapping="Wrap">Number of left pawns</TextBlock>
             <TextBox controls:TextBoxHelper.Watermark="{Binding NumberOfLeftPawns}" Height="20" Margin="5" IsReadOnly="True"/>
             <Image Source="{Binding GameSettings.SelectedPawn.Image}" Margin="20" MaxHeight="100" MaxWidth="100" ></Image>
-            <TextBlock Foreground="#64B5F6" FontSize="14" Margin="10" TextWrapping="Wrap" Text="{Binding GameSettings.SelectedPawn.Name}"></TextBlock>
+            <TextBlock Foreground="#64B5F6" FontSize="14" Margin="10" TextWrapping="Wrap" Text="{Binding GameSettings.SelectedPawn.Name}" HorizontalAlignment="Center"></TextBlock>
             <TextBlock Foreground="#64B5F6" FontSize="14" Margin="10" TextWrapping="Wrap">Number of mistakes</TextBlock>
             <TextBox controls:TextBoxHelper.Watermark="{Binding NumberOfMistakes}" Height="20" Margin="5" IsReadOnly="True"/>
         </StackPanel>
