@@ -10,7 +10,6 @@ namespace EightQueensPuzzle.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private readonly ISettingsService _settingsService;
         private readonly IGameTypeFactory _gameTypeFactory;
         private readonly IChessPawnFactory _chessPawnFactory;
 
@@ -21,7 +20,6 @@ namespace EightQueensPuzzle.ViewModels
 
         public SettingsViewModel(ISettingsService settingsService, IGameTypeFactory gameTypeFactory, IChessPawnFactory chessPawnFactory, IDialogCoordinator dialogCoordinator, IChessboard chessboard) : base(settingsService, dialogCoordinator, chessboard)
         {
-            _settingsService = settingsService;
             _gameTypeFactory = gameTypeFactory;
             _chessPawnFactory = chessPawnFactory;
             _selectedGameType = GameTypes.FirstOrDefault();
@@ -101,7 +99,7 @@ namespace EightQueensPuzzle.ViewModels
 
             GameSettings.SelectedPawn = _chessPawnFactory.CreatePawn(_selectedPawn + 1);
             GameSettings.GameType = _gameTypeFactory.CreateGameType(SelectedGameType, TimeMax, NumberOfMistakes, IsTipsEnabled);
-            _settingsService.Save(GameSettings);
+            SettingsService.Save(GameSettings);
             Chessboard.ClearChessboard();
 
             await controller;
@@ -111,21 +109,9 @@ namespace EightQueensPuzzle.ViewModels
         {
             SelectedPawnIndex = GameSettings.SelectedPawn.Order - 1;
             SelectedGameType = GameSettings.GameType.GameTypeName;
-
-            if (TryToMakeIt != null)
-            {
-                TimeMax = TryToMakeIt.MaxTime;
-                IsTipsEnabled = TryToMakeIt.IsTipsEnabled;
-            }
-            if (WinAsSoonAsPossible != null)
-            {
-                TimeMax = WinAsSoonAsPossible.MaxTime;
-                IsTipsEnabled = WinAsSoonAsPossible.IsTipsEnabled;
-            }
-            if (DoNotMakeMistakes == null) return;
-
-            NumberOfMistakes = DoNotMakeMistakes.MaxMistakes;
-            IsTipsEnabled = DoNotMakeMistakes.IsTipsEnabled;
+            TimeMax = SettingsService.TimeMax;
+            NumberOfMistakes = SettingsService.NumberOfMistakes;
+            IsTipsEnabled = SettingsService.AreTipsEnabled;
         }
     }
 }

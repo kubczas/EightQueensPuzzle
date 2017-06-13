@@ -192,7 +192,6 @@
     <Compile Include="Services\ValidationStrategy\RookValidatorStrategy.cs" />
     <Compile Include="Services\TipService.cs" />
     <Compile Include="Services\ViewModelLocatorService.cs" />
-    <Compile Include="ValidationRules\NumericTextBoxValidationRule.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
     <Compile Include="ViewModels\IGameViewModel.cs" />

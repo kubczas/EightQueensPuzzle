@@ -49,8 +49,9 @@ namespace EightQueensPuzzle.Services.Timer
             Time = StartTime;
         }
 
-        public void Start()
+        public void Start(int startValue)
         {
+            StartTime = startValue;
             GameTimer.Start();
         }
     }

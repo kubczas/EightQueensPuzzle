@@ -1,4 +1,5 @@
 ﻿using EightQueensPuzzle.Models;
+using EightQueensPuzzle.Models.GameTypes;
 using EightQueensPuzzle.Models.Pawns;
 using EightQueensPuzzle.Services;
 using EightQueensPuzzle.Services.Timer;
@@ -16,7 +17,7 @@ namespace EightQueensPuzzle.ViewModels
         private int _numberOfLeftPawns;
         private int _numberOfMistakes;
 
-        public GameViewModel(ISettingsService settingsService, IDialogCoordinator dialogCoordinator, IChessboard chessboard, ITimerServiceManager timerServiceManager) : base(settingsService, dialogCoordinator,chessboard)
+        public GameViewModel(ISettingsService settingsService, IDialogCoordinator dialogCoordinator, IChessboard chessboard, ITimerServiceManager timerServiceManager) : base(settingsService, dialogCoordinator, chessboard)
         {
             LoadGameSettings();
             InitTimer(timerServiceManager);
@@ -91,22 +92,15 @@ namespace EightQueensPuzzle.ViewModels
 
         private void LoadGameSettings()
         {
+            Load();
             SelectedPawn = GameSettings.SelectedPawn;
             NumberOfLeftPawns = GameSettings.SelectedPawn.NumberOfPawns;
-            if (TryToMakeIt != null)
-            {
-                Timer = TryToMakeIt.MaxTime;
-                IsTipsEnabled = TryToMakeIt.IsTipsEnabled;
-            }
-            if (WinAsSoonAsPossible != null)
-            {
-                IsTipsEnabled = WinAsSoonAsPossible.IsTipsEnabled;
-                TimeLimit = WinAsSoonAsPossible.MaxTime;
-            }
-            if (DoNotMakeMistakes == null) return;
-
-            IsTipsEnabled = DoNotMakeMistakes.IsTipsEnabled;
-            NumberOfPossibleMistakes = DoNotMakeMistakes.MaxMistakes;
+            IsTipsEnabled = SettingsService.AreTipsEnabled;
+            NumberOfPossibleMistakes = SettingsService.NumberOfMistakes;
+            if (GameSettings.GameType is TryToMakeIt)
+                Timer = SettingsService.TimeMax;
+            if (GameSettings.GameType is WinAsSoonAsPossible)
+                TimeLimit = SettingsService.TimeMax;
         }
 
         private void VerifyIfPlayerWonGame()
@@ -131,7 +125,7 @@ namespace EightQueensPuzzle.ViewModels
         {
             if (_isGameStarted) return;
 
-            _timerService.Start();
+            _timerService.Start(Timer);
             LoadGameSettings();
 
             ChessboardField.IsReadonly = false;
@@ -140,7 +134,7 @@ namespace EightQueensPuzzle.ViewModels
 
         private async void RestetGame(object obj)
         {
-            var progressDialogController =DialogCoordinator.ShowMessageAsync(this, "Restart", "Restart game...");
+            var progressDialogController = DialogCoordinator.ShowMessageAsync(this, "Restart", "Restart game...");
             LoadGameSettings();
             ResetSettings();
             await progressDialogController;

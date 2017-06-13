@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:validationRules="clr-namespace:EightQueensPuzzle.ValidationRules"
     xmlns:converters="clr-namespace:EightQueensPuzzle.Services.Converters"
     x:Class="EightQueensPuzzle.Views.SettingsPage"
       mc:Ignorable="d" 
@@ -110,15 +109,7 @@
                 </controls:SplitButton>
                 <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="1" Grid.Column="0">Time max:</TextBlock>
                 <WrapPanel Grid.Row="1" Grid.Column="1">
-                    <TextBox controls:TextBoxHelper.ClearTextButton="True" Width="250" Height="20" AcceptsTab="False" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource TimeMaxConverter}}">
-                        <TextBox.Text>
-                            <Binding Path="TimeMax" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validationRules:NumericTextBoxValidationRule ValidationStep="RawProposedValue"></validationRules:NumericTextBoxValidationRule>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                    <controls:NumericUpDown Minimum = "1" Maximum = "1000" Interval = "10" Width="250" Height="20" Value="{Binding TimeMax}" IsEnabled="{Binding ElementName=GameTypeSplitButton, Path=SelectedValue, Converter={StaticResource TimeMaxConverter}}"/>
                     <TextBlock Foreground="#64B5F6" FontSize="12" Margin="10">seconds</TextBlock>
                 </WrapPanel>
                 <TextBlock Foreground="#64B5F6" FontSize="12" Margin="20, 10" Grid.Row="2" Grid.Column="0">Enable tips:</TextBlock>

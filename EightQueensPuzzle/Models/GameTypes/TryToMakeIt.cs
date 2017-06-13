@@ -8,6 +8,6 @@ namespace EightQueensPuzzle.Models.GameTypes
         public int MaxTime { get; set; }
         public override string GameTypeName => GameTypeNames.TryToMakeIt;
         public override TimerType Timer => TimerType.TimerDecrease;
-        public override bool IsTipsEnabled { get; set; }
+        public override bool IsTipsEnabled { get; set; } = false;
     }
 }
