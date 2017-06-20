@@ -192,10 +192,12 @@
     <Compile Include="Services\ValidationStrategy\RookValidatorStrategy.cs" />
     <Compile Include="Services\TipService.cs" />
     <Compile Include="Services\ViewModelLocatorService.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
     <Compile Include="ViewModels\IGameViewModel.cs" />
     <Compile Include="ViewModels\IMenuPageViewModel.cs" />
+    <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">

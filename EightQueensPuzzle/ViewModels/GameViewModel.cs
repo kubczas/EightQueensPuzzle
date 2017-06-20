@@ -12,6 +12,7 @@ namespace EightQueensPuzzle.ViewModels
     public class GameViewModel : ViewModelBase, IObserver, IGameViewModel
     {
         private TimerServiceBase _timerService;
+        private InfoWindow _infoWindow;
         private bool _isGameStarted;
         private int _gameTime;
         private int _numberOfLeftPawns;
@@ -28,8 +29,9 @@ namespace EightQueensPuzzle.ViewModels
 
         private void DisplayInfo(object obj)
         {
-            var infoWindow = new InfoWindow();
-            infoWindow.Show();
+            if(_infoWindow == null)
+                _infoWindow = new InfoWindow();
+            _infoWindow.Show();
         }
 
         public RelayCommand PlayGameCommand { get; set; }
