@@ -21,12 +21,12 @@
                     </Rectangle>
                 </Button>
             </WrapPanel>
-            <controls:MetroAnimatedTabControl>
-                <TabItem Header="Win as soon as possible" IsSelected="True"/>
-                <TabItem Header="Try to make it"/>
+            <controls:MetroAnimatedTabControl SelectedIndex="{Binding SelectedGameTypeDescription, Mode=OneWayToSource}">
+                <TabItem Header="Try to make it" IsSelected="True"/>
+                <TabItem Header="Win as soon as possible"/>
                 <TabItem Header="Do not make mistakes"/>
             </controls:MetroAnimatedTabControl>
-            <TextBlock Text="{Binding Description}" Foreground="#64B5F6"></TextBlock>
+            <TextBlock Text="{Binding Description}" Foreground="#64B5F6" FontSize="14" TextWrapping="Wrap" Margin="30" VerticalAlignment="Center"></TextBlock>
         </StackPanel>
     </Grid>
 </Page>
